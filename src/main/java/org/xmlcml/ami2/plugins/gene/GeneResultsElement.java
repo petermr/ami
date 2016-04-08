@@ -2,9 +2,9 @@ package org.xmlcml.ami2.plugins.gene;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 
-public class GeneResultsElement extends ResultsElement {
+public class GeneResultsElement extends ResultContainerElement {
 
 	
 	private static final Logger LOG = Logger

@@ -23,7 +23,7 @@ import org.xmlcml.cmine.args.VersionManager;
 import org.xmlcml.cmine.files.CTree;
 import org.xmlcml.cmine.files.ContentProcessor;
 import org.xmlcml.cmine.files.ResourceLocation;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 import org.xmlcml.cmine.lookup.DefaultStringDictionary;
 import org.xmlcml.cmine.lookup.AbstractLookup;
 import org.xmlcml.norma.NormaArgProcessor;
@@ -94,6 +94,7 @@ public class AMIArgProcessor extends DefaultArgProcessor {
 	private Boolean stemming;
 	private List<WordSetWrapper> stopwordSetList;
 	public List<String> chosenWordTypes;
+	private List<String> types;
 	public AMIArgProcessor() {
 		super();
 		readArgsResourcesIntoOptions();
@@ -134,38 +135,6 @@ public class AMIArgProcessor extends DefaultArgProcessor {
 
 	// ============= METHODS =============
 	
-	/** caseSensitive?
-	 * 
-	 * @param option list of methods (none gives help)
-	 * @param argIterator
-	 */
-	public void parseCase(ArgumentOption option, ArgIterator argIterator) {
-		List<String> tokens = argIterator.createTokenListUpToNextNonDigitMinus(option);
-		wordCaseList = new ArrayList<String>();
-		if (tokens.size() == 0) {
-			wordCaseList.add(PRESERVE);
-		} else {
-			wordCaseList = tokens;
-		}
-		checkWordCaseList();
-	}
-
-	/** use stemming?
-	 * 
-	 * will have to use import org.apache.lucene.analysis.en.PorterStemFilter;
-	 * 
-	 * @param option list of methods (none gives help)
-	 * @param argIterator
-	 */
-	public void parseStem(ArgumentOption option, ArgIterator argIterator) {
-		stemming = argIterator.getBoolean(option);
-	}
-
-	public void parseStopwords(ArgumentOption option, ArgIterator argIterator) {
-		List<String> stopwordLocations = argIterator.createTokenListUpToNextNonDigitMinus(option);
-		addStopwords(stopwordLocations);
-	}
-
 	public void parseContext(ArgumentOption option, ArgIterator argIterator) {
 		List<String> tokens = argIterator.createTokenListUpToNextNonDigitMinus(option);
 		if (tokens.size() == 0) {
@@ -206,6 +175,40 @@ public class AMIArgProcessor extends DefaultArgProcessor {
 		lookupNames = argIterator.getStrings(option);
 		loadLookupClassesFromArgValues(option);
 	}
+	
+	/** caseSensitive?
+	 * 
+	 * @param option list of methods (none gives help)
+	 * @param argIterator
+	 */
+	public void parseCase(ArgumentOption option, ArgIterator argIterator) {
+		List<String> tokens = argIterator.createTokenListUpToNextNonDigitMinus(option);
+		wordCaseList = new ArrayList<String>();
+		if (tokens.size() == 0) {
+			wordCaseList.add(PRESERVE);
+		} else {
+			wordCaseList = tokens;
+		}
+		checkWordCaseList();
+	}
+
+	/** use stemming?
+	 * 
+	 * will have to use import org.apache.lucene.analysis.en.PorterStemFilter;
+	 * 
+	 * @param option list of methods (none gives help)
+	 * @param argIterator
+	 */
+	public void parseStem(ArgumentOption option, ArgIterator argIterator) {
+		stemming = argIterator.getBoolean(option);
+	}
+
+	public void parseStopwords(ArgumentOption option, ArgIterator argIterator) {
+		List<String> stopwordLocations = argIterator.createTokenListUpToNextNonDigitMinus(option);
+		addStopwords(stopwordLocations);
+	}
+
+
 
 	public void finalLookup(ArgumentOption option) {
 		LOG.debug("final lookup NYI; please add code or override: names are: "+lookupNames+"; override");
@@ -321,6 +324,7 @@ public class AMIArgProcessor extends DefaultArgProcessor {
 			if (optionSearcher == null) {
 				LOG.error("unknown optionType: "+name+"; allowed: "+searcherByNameMap);
 			} else {
+				LOG.trace("searcher: "+optionSearcher);
 				searcherList.add(optionSearcher);
 			}
 		}
@@ -342,7 +346,7 @@ public class AMIArgProcessor extends DefaultArgProcessor {
 				String name = searcher.getName();
 				this.TREE_LOG().info("search "+name);
 				LOG.trace("search "+name);
-				ResultsElement resultsElement = searcher.search(sectionElements, createResultsElement());
+				ResultContainerElement resultsElement = searcher.search(sectionElements, createResultsElement());
 				resultsElement.lookup(lookupInstanceByName, lookupNames);
 				LOG.trace("exactList "+resultsElement.getExactList());
 				resultsElement.setAllResultElementNames(name);
@@ -355,8 +359,8 @@ public class AMIArgProcessor extends DefaultArgProcessor {
 	 * 
 	 * @return
 	 */
-	protected ResultsElement createResultsElement() {
-		return new ResultsElement();
+	protected ResultContainerElement createResultsElement() {
+		return new ResultContainerElement();
 	}
 	
 
@@ -403,7 +407,6 @@ public class AMIArgProcessor extends DefaultArgProcessor {
 	}
 
 	protected void createSearcherList(ArgumentOption option, ArgIterator argIterator) {
-		List<String> types = argIterator.getStrings(option);
 		createSearcherList(types);
 	}
 
@@ -481,7 +484,7 @@ public class AMIArgProcessor extends DefaultArgProcessor {
 		return (currentCTree == null) ? null : currentCTree.getOrCreateContentProcessor();
 	}
 
-	public void addResultsElement(ResultsElement resultsElement) {
+	public void addResultsElement(ResultContainerElement resultsElement) {
 		if (resultsElement != null) {
 			getOrCreateContentProcessor().addResultsElement(resultsElement);
 		}
@@ -567,6 +570,11 @@ public class AMIArgProcessor extends DefaultArgProcessor {
 		if (chosenWordTypes == null) {
 			chosenWordTypes = new ArrayList<String>();
 		}
+	}
+
+	public void parseTypes(ArgumentOption option, ArgIterator argIterator) {
+		types = argIterator.getStrings(option);
+		createSearcherList(option, argIterator);
 	}
 
 

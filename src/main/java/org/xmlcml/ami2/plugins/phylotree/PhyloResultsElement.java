@@ -1,16 +1,16 @@
 package org.xmlcml.ami2.plugins.phylotree;
 
 import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 import org.xmlcml.xml.XMLUtil;
 
-public class PhyloResultsElement extends ResultsElement {
+public class PhyloResultsElement extends ResultContainerElement {
 
 	public PhyloResultsElement(String title) {
 		super(title);
 	}
 
-	public PhyloResultsElement(ResultsElement resultsElement) {
+	public PhyloResultsElement(ResultContainerElement resultsElement) {
 		if (resultsElement == null) {
 			throw new RuntimeException("Null ResultsElement");
 		}

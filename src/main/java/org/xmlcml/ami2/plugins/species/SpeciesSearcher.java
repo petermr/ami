@@ -10,7 +10,7 @@ import org.xmlcml.ami2.plugins.AMISearcher;
 import org.xmlcml.ami2.plugins.NamedPattern;
 import org.xmlcml.cmine.args.DefaultArgProcessor;
 import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 
 import nu.xom.Element;
 
@@ -27,6 +27,7 @@ public class SpeciesSearcher extends AMISearcher {
 
 	@Override 
 	public String getValue(Element xomElement) {
+		super.removeHeadElement(xomElement);
 		String xmlString = xomElement.toXML();
 		// this is ucky, but since we know the HTML is normalized it's probably OK
 		xmlString = xomElement.toXML().replaceAll(DefaultArgProcessor.WHITESPACE, " ");
@@ -46,7 +47,7 @@ public class SpeciesSearcher extends AMISearcher {
 	}
 
 	@Override
-	protected void postProcessResultsElement(ResultsElement resultsElement) {
+	protected void postProcessResultsElement(ResultContainerElement resultsElement) {
 		List<String> exactList = resultsElement.getExactList();
 		LinneanNamer linneanNamer = new LinneanNamer();
 		List<String> matchList = linneanNamer.expandAbbreviations(exactList);

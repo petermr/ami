@@ -41,10 +41,6 @@ public class SequenceArgProcessor extends AMIArgProcessor {
 		createAndStoreNamedSearchers(option);
 	}
 
-	public void parseTypes(ArgumentOption option, ArgIterator argIterator) {
-		createSearcherList(option, argIterator);
-	}
-
 	public void parseLength(ArgumentOption option, ArgIterator argIterator) {
 		lengthRange = argIterator.getIntRange(option);
 	}

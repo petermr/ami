@@ -10,7 +10,7 @@ import org.xmlcml.ami2.plugins.regex.CompoundRegex;
 import org.xmlcml.ami2.plugins.regex.RegexComponent;
 import org.xmlcml.ami2.plugins.word.WordArgProcessor;
 import org.xmlcml.ami2.plugins.word.WordCollectionFactory;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 import org.xmlcml.cmine.lookup.DefaultStringDictionary;
 
 import nu.xom.Element;
@@ -27,7 +27,7 @@ public class SearchSearcher extends AMISearcher {
 	private CompoundRegex compoundRegex;
 	Element resultElement;
 	private List<String> searchWords;
-	private ResultsElement resultsElement;
+	private ResultContainerElement resultsElement;
 	
 	public SearchSearcher(AMIArgProcessor argProcessor, DefaultStringDictionary dictionary) {
 		super(argProcessor, dictionary);
@@ -47,13 +47,13 @@ public class SearchSearcher extends AMISearcher {
 	 * 
 	 * @return resultsElements 
 	 */
-	public ResultsElement searchWordList() {
+	public ResultContainerElement searchWordList() {
 		List<String> strings = new WordCollectionFactory((SearchArgProcessor)this.getArgProcessor()).createWordList();
-		ResultsElement resultsElement = searchWithDictionary(strings);
+		ResultContainerElement resultsElement = searchWithDictionary(strings);
 		return resultsElement;
 	}
 
-	public ResultsElement getResultsElement() {
+	public ResultContainerElement getResultsElement() {
 		return resultsElement;
 	}
 

@@ -55,6 +55,7 @@ public class SequenceArgProcessorTest {
 	}
 	
 	@Test
+	@Ignore
 	public void testSequenceHarness() throws Exception {
 		// SHOWCASE
 		String cmd = "--sq.sequence --context 35 50 --sq.type dnaprimer prot1 -q target/plosone/sequences/ -i scholarly.html"; 

@@ -14,7 +14,7 @@ import org.xmlcml.ami2.wordutil.WordSetWrapper;
 import org.xmlcml.cmine.args.DefaultArgProcessor;
 import org.xmlcml.cmine.files.CTree;
 import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 import org.xmlcml.cmine.files.ResultsElementList;
 
 import com.google.common.collect.HashMultiset;
@@ -92,11 +92,11 @@ public class WordCollectionFactory {
 		List<String> chosenMethods = wordArgProcessor.getChosenWordAggregationMethods();
 //		LOG.debug("chosen methods: "+chosenMethods);
 		if (chosenMethods.contains(WordArgProcessor.WORD_LENGTHS)) {
-			ResultsElement resultsElement = createWordLengthsResultsElement(words);
+			ResultContainerElement resultsElement = createWordLengthsResultsElement(words);
 			wordArgProcessor.addResultsElement(resultsElement);
 		}
 		if (chosenMethods.contains(WordArgProcessor.WORD_FREQUENCIES) || chosenMethods.contains(WordArgProcessor.FREQUENCIES)) {
-			ResultsElement resultsElement = getWordFrequencies(words);
+			ResultContainerElement resultsElement = getWordFrequencies(words);
 			wordArgProcessor.addResultsElement(resultsElement);
 		}
 	}
@@ -429,7 +429,7 @@ public class WordCollectionFactory {
 
 	private Multiset<String> createAggregateSet(ResultsElementList resultsElementList) {
 		Multiset<String> aggregateSet = HashMultiset.create();
-		for (ResultsElement resultsElement : resultsElementList) {
+		for (ResultContainerElement resultsElement : resultsElementList) {
 			String title = resultsElement.getTitle();
 			if (!WordArgProcessor.FREQUENCIES.equals(title)) {
 				LOG.debug("Skipped non:frequencies result: "+title);
@@ -451,7 +451,7 @@ public class WordCollectionFactory {
 		return aggregatedFrequenciesElement;
 	}
 
-	private void addResultsToSet(Multiset<String> aggregateSet, ResultsElement resultsElement) {
+	private void addResultsToSet(Multiset<String> aggregateSet, ResultContainerElement resultsElement) {
 		for (ResultElement resultElement : resultsElement) {
 			WordResultElement wordResultElement = (WordResultElement) resultElement;
 			String word = wordResultElement.getWord();

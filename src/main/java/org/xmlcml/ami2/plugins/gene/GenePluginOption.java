@@ -26,6 +26,7 @@ public class GenePluginOption extends AMIPluginOption {
 
 	protected void run() {
 		String cmd = "--project "+projectDir+" -i scholarly.html --g.gene --g.type "+optionString;
+		LOG.trace(">>>"+this.getClass()+" running "+cmd);
 		new GeneArgProcessor(cmd).runAndOutput();
 	}
 	

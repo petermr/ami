@@ -11,6 +11,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlcml.ami2.AMIFixtures;
 import org.xmlcml.ami2.lookups.RRIDLookup;
+import org.xmlcml.ami2.plugins.AMIArgProcessor;
 import org.xmlcml.ami2.plugins.identifier.IdentifierArgProcessor;
 import org.xmlcml.cmine.lookup.AbstractLookup;
 import org.xmlcml.norma.NormaArgProcessor;
@@ -54,7 +55,7 @@ public class RRIDTest {
 	    rridDir.mkdirs();
 	    FileUtils.copyDirectory(AMIFixtures.TEST_RRID_DIR, rridDir);
 	    cmd = "--id.identifier --context 35 50 --id.regex  regex/identifiers.xml --id.type rrid.ab -q "+rridDir+" -i scholarly.html"; 
-	    IdentifierArgProcessor argProcessor = new IdentifierArgProcessor(cmd);
+	    AMIArgProcessor argProcessor = new IdentifierArgProcessor(cmd);
 	    argProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(argProcessor, 1, 0, 
 				"<results title=\"rrid.ab\">"

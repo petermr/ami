@@ -10,7 +10,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.xmlcml.ami2.plugins.AMIArgProcessor;
 import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 import org.xmlcml.euclid.IntArray;
 import org.xmlcml.euclid.IntRange;
 import org.xmlcml.euclid.RealArray;
@@ -28,7 +28,7 @@ import org.xmlcml.xml.XMLUtil;
  * @author pm286
  *
  */
-public class WordResultsElement extends ResultsElement {
+public class WordResultsElement extends ResultContainerElement {
 
 	
 	private static final Logger LOG = Logger
@@ -43,7 +43,7 @@ public class WordResultsElement extends ResultsElement {
 		super(title);
 	}
 
-	public WordResultsElement(ResultsElement resultsElement) {
+	public WordResultsElement(ResultContainerElement resultsElement) {
 		if (resultsElement == null) {
 			throw new RuntimeException("Null ResultsElement");
 		}

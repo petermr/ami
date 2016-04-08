@@ -4,7 +4,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.xmlcml.ami2.plugins.CommandProcessor;
+import org.xmlcml.ami2.plugins.CommandProcessorOld;
 
 public class TitleTest {
 
@@ -17,7 +17,7 @@ private static final Logger LOG = Logger.getLogger(TitleTest.class);
 	@Test
 	@Ignore // "NYI"
 	public void testAddTitlesToRowHeadings() {
-		CommandProcessor commandProcessor = AMIFixtures.createDefaultDirectoriesAndProcessor("title");
+		CommandProcessorOld commandProcessor = AMIFixtures.createDefaultDirectoriesAndProcessor("title");
 		commandProcessor.setDefaultCommands("Humgen Spec Genus Primer WordFreq");
 	}
 }

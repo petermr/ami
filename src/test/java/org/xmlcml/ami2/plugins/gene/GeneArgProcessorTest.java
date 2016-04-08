@@ -43,7 +43,7 @@ public class GeneArgProcessorTest {
 		CMineTestFixtures.cleanAndCopyDir(new File(AMIFixtures.TEST_PLOSONE_DIR, "journal.pone.0008887"), targetDir);
 		String cmd = "--g.gene --context 35 50 --g.type human -q "+targetDir+" -i scholarly.html"; 
  
-		GeneArgProcessor argProcessor = new GeneArgProcessor();
+		AMIArgProcessor argProcessor = new GeneArgProcessor();
 		argProcessor.parseArgs(cmd);
 		argProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(argProcessor, 1, 0, 
@@ -58,9 +58,9 @@ public class GeneArgProcessorTest {
 		File large = new File(AMIFixtures.TEST_PATENTS_DIR, "US08979");
 		NormaTestFixtures.runNorma(large, "project", "uspto2html"); // writes to test dir
 		String args = "-i scholarly.html --g.gene "
-				+ "--c.dictionary /org/xmlcml/ami2/plugins/gene/hgnc/hgnc.xml"
+				+ "--dictionary /org/xmlcml/ami2/plugins/gene/hgnc/hgnc.xml"
 				+ " --project "+large; 
-		GeneArgProcessor argProcessor = new GeneArgProcessor(args);
+		AMIArgProcessor argProcessor = new GeneArgProcessor(args);
 		argProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(argProcessor, 1, 0, 
 				"<results title=\"hgnc\"><result pre=\"Theodore Columbus OH US Agents Agent: [addressbook]:"
@@ -79,7 +79,7 @@ public class GeneArgProcessorTest {
 		String args = "-i scholarly.html --g.gene "
 				+ "--c.dictionary /org/xmlcml/ami2/plugins/gene/hgnc/hgnc.xml"
 				+ " --project "+large; 
-		GeneArgProcessor argProcessor = new GeneArgProcessor(args);
+		AMIArgProcessor argProcessor = new GeneArgProcessor(args);
 		argProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(argProcessor, 1, 0, 
 				"<results title=\"hgnc\">"

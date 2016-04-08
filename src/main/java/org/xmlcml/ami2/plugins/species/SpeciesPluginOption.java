@@ -27,9 +27,8 @@ public class SpeciesPluginOption extends AMIPluginOption {
 	}
 
 	public void run() {
-		String cmd = "--project "+projectDir+" -i scholarly.html --sp.species --sp.type "+optionString;
-		DefaultArgProcessor.CM_LOG.debug(cmd);
-//		System.out.print("S: "+cmd);
+		String cmd = createCommandString("--project "+projectDir+" -i scholarly.html --sp.species --sp.type "+optionString);
+		LOG.debug(cmd);
 		System.out.print("SP: "+projectDir);
 		new SpeciesArgProcessor(cmd).runAndOutput();
 	}

@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlcml.ami2.plugins.AMIArgProcessor;
-import org.xmlcml.ami2.plugins.CommandProcessor;
+import org.xmlcml.ami2.plugins.CommandProcessorOld;
 import org.xmlcml.ami2.plugins.regex.RegexArgProcessor;
 import org.xmlcml.ami2.plugins.word.WordArgProcessor;
 import org.xmlcml.ami2.wordutil.WordSetWrapper;
@@ -124,7 +124,7 @@ public class LargeTests {
 		File rawDir = new File("../projects/"+project);
 		File projectDir = new File("target/tutorial/"+project+"/");
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		commandProcessor.processCommands(""
 //				+ "species(binomial,genus) "
 //				+ " word(search)w.search:/org/xmlcml/ami2/plugins/dictionary/inn.xml_/org/xmlcml/ami2/plugins/dictionary/cochrane.xml"
@@ -149,7 +149,7 @@ public class LargeTests {
 		File rawDir = new File("../projects/"+project);
 		File projectDir = new File("target/tutorial/"+project+"/");
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		commandProcessor.processCommands(""
 //				+ "species(binomial,genus) "
 //				+ " word(search)w.search:/org/xmlcml/ami2/plugins/dictionary/inn.xml_/org/xmlcml/ami2/plugins/dictionary/cochrane.xml"
@@ -177,7 +177,7 @@ public class LargeTests {
 		File rawDir = new File("../projects/"+project);
 		File projectDir = new File("target/tutorial/"+project+"/");
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		commandProcessor.processCommands(""
 				+ "species(binomial,genus) "
 //				+ "gene(human)"
@@ -198,12 +198,13 @@ public class LargeTests {
 	@Test
 	public void runBespokeDictionary() throws IOException {
 		File projectDir = new File("target/tutorial/zika10");
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		commandProcessor.processCommands(""
 				+ "word(search)w.search:/org/xmlcml/ami2/plugins/dictionary/inn.xml"
 				+ "");
 		commandProcessor.createDataTables();
 	}
+
 
 	// =============== private support ==============
 
@@ -216,7 +217,7 @@ public class LargeTests {
 		File projectDir = new File("target/tutorial/"+project+"/");
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
 		
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		commandProcessor.processCommands(""
 				+ "species(binomial,genus) "
 				+ " gene(human)"
@@ -235,7 +236,7 @@ public class LargeTests {
 		File projectDir = new File("target/tutorial/"+project+"/");
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
 		
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		commandProcessor.processCommands(""
 				+ "regex(regex/statistics.xml)"
 //				+ " word(frequencies)xpath:@count>20~w.stopwords:pmcstop.txt_stopwords.txt"

@@ -1,6 +1,7 @@
 package org.xmlcml.ami2.plugins;
 
 import java.io.File;
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FilenameFilter;
@@ -17,7 +18,7 @@ import java.util.Set;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.xmlcml.cmine.files.PluginOption;
-import org.xmlcml.cmine.files.ProjectSnippetsTree;
+import org.xmlcml.cmine.files.PluginSnippetsTree;
 import org.xmlcml.cmine.files.ResultElement;
 import org.xmlcml.cmine.files.SnippetsTree;
 import org.xmlcml.cmine.files.XMLSnippets;
@@ -50,6 +51,7 @@ public class ResultsAnalysis implements CellCalculator {
 	
 	public enum SummaryType {
 		COMMONEST("commonest"),
+		CONTEXT("context"),
 		COUNT("count"),
 		ENTRIES("entries"),
 		FULL("full");
@@ -65,9 +67,14 @@ public class ResultsAnalysis implements CellCalculator {
 	public static final String SCHOLARLY_HTML = "/scholarly.html";
 	protected static final String SNIPPETS_XML = "snippets.xml";
 	public static List<SummaryType> SUMMARY_TYPES = 
-		Arrays.asList(new SummaryType[]{SummaryType.COMMONEST, SummaryType.COUNT, SummaryType.ENTRIES, SummaryType.FULL});
+		Arrays.asList(new SummaryType[]{
+				SummaryType.COMMONEST, 
+				SummaryType.COUNT, 
+				SummaryType.CONTEXT, 
+				SummaryType.ENTRIES, 
+				SummaryType.FULL});
 	
-	public Map<String, ProjectSnippetsTree> projectSnippetsTreeByPluginOption;
+	public Map<String, PluginSnippetsTree> pluginSnippetsTreeByPluginOption;
 	private Set<String> cTreeNameSet;
 	public List<String> cTreeNameList;
 	public List<String> pluginOptionNameList;
@@ -100,38 +107,38 @@ public class ResultsAnalysis implements CellCalculator {
 			LOG.error("Non-existent XML file: "+xmlFile);
 			return;
 		}
-		ProjectSnippetsTree projectSnippetsTree = ProjectSnippetsTree.createProjectSnippetsTree(element);
-		if (projectSnippetsTree == null) {
-			LOG.warn("Cannot create ProjectSnippetsTree: "+xmlFile);
+		PluginSnippetsTree pluginSnippetsTree = PluginSnippetsTree.createPluginSnippetsTree(element);
+		if (pluginSnippetsTree == null) {
+			LOG.warn("Cannot create PluginSnippetsTree: "+xmlFile);
 			return;
 		}
-		ensureProjectSnippetsTreeByPluginOptionName();
-		PluginOption pluginOption = projectSnippetsTree.getPluginOption();
+		ensurePluginSnippetsTreeByPluginOptionName();
+		PluginOption pluginOption = pluginSnippetsTree.getPluginOption();
 		if (pluginOption == null) {
 			LOG.warn("Null pluginOption");
 			return;
 		}
-		if (projectSnippetsTreeByPluginOption.containsKey(pluginOption)) {
+		if (pluginSnippetsTreeByPluginOption.containsKey(pluginOption)) {
 			LOG.warn("Already has pluginOption: "+pluginOption);
 		}
-		projectSnippetsTreeByPluginOption.put(pluginOption.toString(), projectSnippetsTree);
+		pluginSnippetsTreeByPluginOption.put(pluginOption.toString(), pluginSnippetsTree);
 	}
 	
-	private void ensureProjectSnippetsTreeByPluginOptionName() {
-		if (projectSnippetsTreeByPluginOption == null) {
-			projectSnippetsTreeByPluginOption = new HashMap<String, ProjectSnippetsTree>();
+	private void ensurePluginSnippetsTreeByPluginOptionName() {
+		if (pluginSnippetsTreeByPluginOption == null) {
+			pluginSnippetsTreeByPluginOption = new HashMap<String, PluginSnippetsTree>();
 		}
 	}
 
-	public Map<String, ProjectSnippetsTree> getProjectSnippetsTreeByPluginOption() {
-		return projectSnippetsTreeByPluginOption;
+	public Map<String, PluginSnippetsTree> getPluginSnippetsTreeByPluginOption() {
+		return pluginSnippetsTreeByPluginOption;
 	}
 
 	public Set<String> getCTreeNameSet() {
 		if (cTreeNameSet == null) {
 			cTreeNameSet = new HashSet<String>();
-			ensureProjectSnippetsTreeByPluginOptionName();
-			for (Map.Entry<String, ProjectSnippetsTree> entry : projectSnippetsTreeByPluginOption.entrySet()) {
+			ensurePluginSnippetsTreeByPluginOptionName();
+			for (Map.Entry<String, PluginSnippetsTree> entry : pluginSnippetsTreeByPluginOption.entrySet()) {
 				cTreeNameSet.addAll(entry.getValue().getCTreeNameList());
 			}
 		}
@@ -149,8 +156,9 @@ public class ResultsAnalysis implements CellCalculator {
 		HtmlElement htmlElement = null;
 		List<XMLSnippets> list = snippetsTree.getOrCreateSnippetsList();
 		List<String> terms = createTerms(list);
-		Multiset<String> multiset = createMultisetOmittingNullEntries(terms);
-		Iterable<Multiset.Entry<String>> entrys = CMineUtil.getEntriesSortedByCount(multiset);
+		List<HtmlDiv> ptpDivs = createPreTermPost(list);
+		Multiset<String> termMultiset = createMultisetOmittingNullEntries(terms);
+		Iterable<Multiset.Entry<String>> entrys = CMineUtil.getEntriesSortedByCount(termMultiset);
 		Iterator<Entry<String>> iterator = entrys.iterator();
 		if (cellContentFlag == null) {
 			LOG.warn("no cell content flag");
@@ -171,10 +179,19 @@ public class ResultsAnalysis implements CellCalculator {
 				Entry<String> entry = iterator.next();
 				htmlElement = createSpan(entry);
 			}
+		} else if (cellContentFlag.equals(SummaryType.CONTEXT)) {
+			htmlElement = new HtmlDiv();
+			int maxCount = 3;
+			for (HtmlDiv ptp : ptpDivs) {
+				htmlElement.appendChild(ptp);
+				if (maxCount-- <= 0) {
+					break;
+				}
+			}
 		} else if (cellContentFlag.equals(SummaryType.COUNT)) {
-			htmlElement = createSpan(multiset.size());
+			htmlElement = createSpan(termMultiset.size());
 		} else if (cellContentFlag.equals(SummaryType.ENTRIES)) {
-			htmlElement = createSpan(multiset.entrySet().size());
+			htmlElement = createSpan(termMultiset.entrySet().size());
 		} else {
 			LOG.warn("Unknown flag: "+cellContentFlag);
 		}
@@ -216,22 +233,48 @@ public class ResultsAnalysis implements CellCalculator {
 		return htmlSpan;
 	}
 
+	private List<HtmlDiv> createPreTermPost(List<XMLSnippets> list) {
+		List<HtmlDiv> preTermPosts = new ArrayList<HtmlDiv>();
+		for (XMLSnippets snippets : list) {
+			for (int i = 0; i < snippets.getChildElements().size(); i++) {
+				ResultElement resultElement = ResultElement.createResultElement(snippets.getChildElements().get(i));
+				String term = resultElement.getTerm();
+				String pre = resultElement.getPre();
+				String post = resultElement.getPost();
+				HtmlDiv div = new HtmlDiv();
+				div.appendChild(createSpan(" ", pre));
+				div.appendChild(createSpan(term, pre+"~"+term+"~"+post));
+				div.appendChild(createSpan(" ", post));
+				preTermPosts.add(div);
+			}
+		}
+		return preTermPosts;
+	}
+
+	private HtmlSpan createSpan(String content, String title) {
+		HtmlSpan span = new HtmlSpan();
+		span.setValue(content);
+		if (title != null) {
+			span.setTitle(title);
+		}
+		return span;
+	}
+	
 	private List<String> createTerms(List<XMLSnippets> list) {
 		List<String> terms = new ArrayList<String>();
 		for (XMLSnippets snippets : list) {
 			for (int i = 0; i < snippets.getChildElements().size(); i++) {
 				ResultElement resultElement = ResultElement.createResultElement(snippets.getChildElements().get(i));
-				String term = resultElement.getTerm();
-				terms.add(term);
+				terms.add(resultElement.getTerm());
 			}
 		}
 		return terms;
 	}
 
 	public HtmlTable makeHtmlDataTable() {
-		ensureProjectSnippetsTreeByPluginOptionName();
-		Set<String> set = this.projectSnippetsTreeByPluginOption.keySet();
-		LOG.trace(set);
+		ensurePluginSnippetsTreeByPluginOptionName();
+		Set<String> set = this.pluginSnippetsTreeByPluginOption.keySet();
+		LOG.debug("HTML"+set+" | "+pluginSnippetsTreeByPluginOption.size());
 		pluginOptionNameList = Arrays.asList(set.toArray(new String[0]));
 		Collections.sort(this.pluginOptionNameList);
 		
@@ -312,9 +355,9 @@ public class ResultsAnalysis implements CellCalculator {
 
 	public HtmlElement createCellContents(int iRow, int iCol) {
 		String columnHeadingx = getColumnHeadingList().get(iCol);
-		ProjectSnippetsTree projectSnippetsTree = this.projectSnippetsTreeByPluginOption.get(columnHeadingx);
+		PluginSnippetsTree pluginSnippetsTree = this.pluginSnippetsTreeByPluginOption.get(columnHeadingx);
 		String rowHeading = getRowHeadingList().get(iRow);
-		SnippetsTree snippetsTree = projectSnippetsTree.getOrCreateSnippetsTreeByCTreeName().get(rowHeading);
+		SnippetsTree snippetsTree = pluginSnippetsTree.getOrCreateSnippetsTreeByCTreeName().get(rowHeading);
 		HtmlElement contents =  (snippetsTree == null) ? null : this.createSnippetsTreeContents(snippetsTree);
 		return contents;
 	}
@@ -340,6 +383,12 @@ public class ResultsAnalysis implements CellCalculator {
 			}
 		}
 				
+	}
+
+	public void addSnippetsFiles(List<File> snippetsFiles) {
+		for (File file : snippetsFiles) {
+			this.addSnippetsFile(file);
+		}
 	}
 	
 }

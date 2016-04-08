@@ -11,7 +11,7 @@ import org.xmlcml.ami2.plugins.AMISearcher;
 import org.xmlcml.ami2.plugins.NamedPattern;
 import org.xmlcml.cmine.args.ArgIterator;
 import org.xmlcml.cmine.args.ArgumentOption;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 import org.xmlcml.cmine.lookup.DefaultStringDictionary;
 
 /** 
@@ -45,11 +45,6 @@ public class GeneArgProcessor extends AMIArgProcessor {
 	
 	public void initGene(ArgumentOption option) {
 		createAndStoreNamedSearchers(option);
-	}
-
-	// this will probably become deprecated
-	public void parseTypes(ArgumentOption option, ArgIterator argIterator) {
-		createSearcherList(option, argIterator);
 	}
 
 	public void runExtractGene(ArgumentOption option) {
@@ -104,7 +99,7 @@ public class GeneArgProcessor extends AMIArgProcessor {
 	}
 
 	@Override
-	protected ResultsElement createResultsElement() {
+	protected ResultContainerElement createResultsElement() {
 		return new GeneResultsElement();
 	}
 

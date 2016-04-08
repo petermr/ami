@@ -58,10 +58,6 @@ public class IdentifierArgProcessor extends AMIArgProcessor {
 		LOG.trace("MAP: "+searcherByNameMap);
 	}
 
-	public void parseTypes(ArgumentOption option, ArgIterator argIterator) {
-		createSearcherList(option, argIterator);
-	}
-
 	public void runExtractIdentifiers(ArgumentOption option) {
 		searchSectionElements();
 	}

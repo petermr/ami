@@ -9,7 +9,7 @@ import org.xmlcml.cmine.args.ArgIterator;
 import org.xmlcml.cmine.args.ArgumentOption;
 import org.xmlcml.cmine.files.CTree;
 import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 
 /** 
  * Processes commandline arguments.
@@ -53,7 +53,7 @@ public class SimpleArgProcessor extends AMIArgProcessor {
 		if (!CTree.isReservedFilename(outputFilename)) {
 			throw new RuntimeException("Output is not a reserved file: "+outputFilename);
 		}
-		ResultsElement resultsElement = new ResultsElement();
+		ResultContainerElement resultsElement = new ResultContainerElement();
 		ResultElement resultElement = new ResultElement();
 		resultElement.setValue("wordCount", String.valueOf(words.size()));
 		resultsElement.appendChild(resultElement);

@@ -10,7 +10,7 @@ import org.xmlcml.ami2.plugins.AMIArgProcessor;
 import org.xmlcml.ami2.plugins.AMISearcher;
 import org.xmlcml.ami2.plugins.MatcherResult;
 import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 
 public class RegexSearcher extends AMISearcher {
 
@@ -41,15 +41,15 @@ public class RegexSearcher extends AMISearcher {
 	/** specific search, iterates thorugh RegexComponents
 	 * 
 	 */
-	public ResultsElement searchXomElement(Element xomElement) {
+	public ResultContainerElement searchXomElement(Element xomElement) {
 		List<RegexComponent> regexComponents = compoundRegex.getOrCreateRegexComponentList();
-		ResultsElement resultsElement = new ResultsElement();
+		ResultContainerElement resultsElement = new ResultContainerElement();
 		String xomValue = xomElement.getValue();
 		LOG.trace("XOM "+xomValue);
 		for (RegexComponent regexComponent : regexComponents) {
 			LOG.trace("RGXCOMP "+regexComponent);
 			MatcherResult matcherResult = regexComponent.searchWithPattern(xomValue); // crude to start with
-			ResultsElement resultsElementToAdd = matcherResult.createResultsElement();
+			ResultContainerElement resultsElementToAdd = matcherResult.createResultsElement();
 			if (resultsElementToAdd != null) {
 				LOG.trace("RESELEM "+resultsElementToAdd);
 				addXpathAndAddtoResultsElement(xomElement, resultsElement, resultsElementToAdd);

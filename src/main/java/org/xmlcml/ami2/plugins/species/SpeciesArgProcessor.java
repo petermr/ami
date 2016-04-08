@@ -10,7 +10,7 @@ import org.xmlcml.ami2.plugins.AMISearcher;
 import org.xmlcml.ami2.plugins.NamedPattern;
 import org.xmlcml.cmine.args.ArgIterator;
 import org.xmlcml.cmine.args.ArgumentOption;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 
 /** 
  * Processes commandline arguments.
@@ -43,10 +43,6 @@ public class SpeciesArgProcessor extends AMIArgProcessor {
 	
 	public void initSpecies(ArgumentOption option) {
 		createAndStoreNamedSearchers(option);
-	}
-
-	public void parseTypes(ArgumentOption option, ArgIterator argIterator) {
-		createSearcherList(option, argIterator);
 	}
 
 	public void parseAbbreviations(ArgumentOption option, ArgIterator argIterator) {
@@ -92,7 +88,7 @@ public class SpeciesArgProcessor extends AMIArgProcessor {
 	}
 
 	@Override
-	protected ResultsElement createResultsElement() {
+	protected ResultContainerElement createResultsElement() {
 		return new SpeciesResultsElement();
 	}
 

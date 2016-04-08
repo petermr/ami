@@ -1,0 +1,155 @@
+<dictionary title="phytochemicals">
+<entry term="amorphene" name="amorphene"/>
+<entry term="amylfuran" name="amylfuran"/>
+<entry term="androencecalinol" name="androencecalinol"/>
+<entry term="artemisia ketone" name="artemisia ketone"/>
+<entry term="benzaldehyde" name="benzaldehyde"/>
+<entry term="benzene" name="benzene"/>
+<entry term="bergamotene" name="bergamotene"/>
+<entry term="beta" name="beta"/>
+<entry term="bicycloelemene" name="bicycloelemene"/>
+<entry term="bicyclogermacrene" name="bicyclogermacrene"/>
+<entry term="bisabolene" name="bisabolene"/>
+<entry term="bisabolol" name="bisabolol"/>
+<entry term="borneol" name="borneol"/>
+<entry term="bornyl acetate" name="bornyl acetate"/>
+<entry term="bornyl formate" name="bornyl formate"/>
+<entry term="bourbonene" name="bourbonene"/>
+<entry term="butanone" name="butanone"/>
+<entry term="cadinal" name="cadinal"/>
+<entry term="cadinene" name="cadinene"/>
+<entry term="cadinol" name="cadinol"/>
+<entry term="calacorene" name="calacorene"/>
+<entry term="camphene" name="camphene"/>
+<entry term="camphor" name="camphor"/>
+<entry term="carene" name="carene"/>
+<entry term="carvacrol" name="carvacrol"/>
+<entry term="carvacryl acetate" name="carvacryl acetate"/>
+<entry term="caryophylla" name="caryophylla"/>
+<entry term="caryophyllene" name="caryophyllene"/>
+<entry term="caryophyllene epoxide" name="caryophyllene epoxide"/>
+<entry term="caryophyllene oxide" name="caryophyllene oxide"/>
+<entry term="cineole" name="cineole"/>
+<entry term="citronellol" name="citronellol"/>
+<entry term="copaene" name="copaene"/>
+<entry term="coumarin" name="coumarin"/>
+<entry term="cubebene" name="cubebene"/>
+<entry term="cubebol" name="cubebol"/>
+<entry term="cubenene" name="cubenene"/>
+<entry term="cubenol" name="cubenol"/>
+<entry term="cymene" name="cymene"/>
+<entry term="demethoxyencecalin" name="demethoxyencecalin"/>
+<entry term="demethylencecalin" name="demethylencecalin"/>
+<entry term="desmethoxyencecalin" name="desmethoxyencecalin"/>
+<entry term="dihydroactinidiolide" name="dihydroactinidiolide"/>
+<entry term="dihydrobenzofuran" name="dihydrobenzofuran"/>
+<entry term="dihydrodemethoxyencecalin" name="dihydrodemethoxyencecalin"/>
+<entry term="dihydroencecalin" name="dihydroencecalin"/>
+<entry term="dillapiole" name="dillapiole"/>
+<entry term="dimethoxyageratochromene" name="dimethoxyageratochromene"/>
+<entry term="dimethylchromene" name="dimethylchromene"/>
+<entry term="dodecanoic acid" name="dodecanoic acid"/>
+<entry term="eicosane" name="eicosane"/>
+<entry term="elemene" name="elemene"/>
+<entry term="elemol" name="elemol"/>
+<entry term="encecalin" name="encecalin"/>
+<entry term="eugenol" name="eugenol"/>
+<entry term="farnesene" name="farnesene"/>
+<entry term="farnesol" name="farnesol"/>
+<entry term="farnesyl acetate" name="farnesyl acetate"/>
+<entry term="fenchene" name="fenchene"/>
+<entry term="fenchone" name="fenchone"/>
+<entry term="fenebrene" name="fenebrene"/>
+<entry term="funebrene" name="funebrene"/>
+<entry term="geraniol" name="geraniol"/>
+<entry term="geranyl butyrate" name="geranyl butyrate"/>
+<entry term="germacrene" name="germacrene"/>
+<entry term="guaiol" name="guaiol"/>
+<entry term="gurjunene" name="gurjunene"/>
+<entry term="heneicosane" name="heneicosane"/>
+<entry term="heptanal" name="heptanal"/>
+<entry term="heptanone" name="heptanone"/>
+<entry term="hexadecane" name="hexadecane"/>
+<entry term="hexadecanoic acid" name="hexadecanoic acid"/>
+<entry term="hexenal" name="hexenal"/>
+<entry term="hexenol" name="hexenol"/>
+<entry term="hexenyl acetate" name="hexenyl acetate"/>
+<entry term="himachalene" name="himachalene"/>
+<entry term="humulene" name="humulene"/>
+<entry term="humulene oxide" name="humulene oxide"/>
+<entry term="humulene oxide ii" name="humulene oxide ii"/>
+<entry term="hydroxyethyl" name="hydroxyethyl"/>
+<entry term="hydroxyl" name="hydroxyl"/>
+<entry term="hydroxylethyl" name="hydroxylethyl"/>
+<entry term="isoborneol" name="isoborneol"/>
+<entry term="isobornyl acetate" name="isobornyl acetate"/>
+<entry term="isobornyl formate" name="isobornyl formate"/>
+<entry term="isobutyl" name="isobutyl"/>
+<entry term="isocaryophyllene" name="isocaryophyllene"/>
+<entry term="jasmone" name="jasmone"/>
+<entry term="limonene" name="limonene"/>
+<entry term="linalool" name="linalool"/>
+<entry term="linolenic acid" name="linolenic acid"/>
+<entry term="longipine" name="longipine"/>
+<entry term="melitol" name="melitol"/>
+<entry term="methoxyphenol" name="methoxyphenol"/>
+<entry term="methoxyquinoline" name="methoxyquinoline"/>
+<entry term="methylene" name="methylene"/>
+<entry term="methyleugenol" name="methyleugenol"/>
+<entry term="muurola" name="muurola"/>
+<entry term="muurolene" name="muurolene"/>
+<entry term="muurolol" name="muurolol"/>
+<entry term="myrcene" name="myrcene"/>
+<entry term="myrtenal" name="myrtenal"/>
+<entry term="neralidol" name="neralidol"/>
+<entry term="nerolidol" name="nerolidol"/>
+<entry term="nonanal" name="nonanal"/>
+<entry term="ocimene" name="ocimene"/>
+<entry term="octacosane" name="octacosane"/>
+<entry term="octadecadienoic acid" name="octadecadienoic acid"/>
+<entry term="octadecanoic acid" name="octadecanoic acid"/>
+<entry term="octadecatrienoic acid" name="octadecatrienoic acid"/>
+<entry term="octahydro" name="octahydro"/>
+<entry term="octane" name="octane"/>
+<entry term="octanol" name="octanol"/>
+<entry term="octen" name="octen"/>
+<entry term="pentadecadien" name="pentadecadien"/>
+<entry term="pentadecanal" name="pentadecanal"/>
+<entry term="pentadecanone" name="pentadecanone"/>
+<entry term="phellandrene" name="phellandrene"/>
+<entry term="phenylethylalcohol" name="phenylethylalcohol"/>
+<entry term="phytane" name="phytane"/>
+<entry term="phytol" name="phytol"/>
+<entry term="pinene" name="pinene"/>
+<entry term="pinocarveol" name="pinocarveol"/>
+<entry term="precocene i" name="precocene i"/>
+<entry term="precocene ii" name="precocene ii"/>
+<entry term="propylnaphthalene" name="propylnaphthalene"/>
+<entry term="sabinene" name="sabinene"/>
+<entry term="sabinene acetate" name="sabinene acetate"/>
+<entry term="sabinene hydrate" name="sabinene hydrate"/>
+<entry term="sabinenehydrate" name="sabinenehydrate"/>
+<entry term="santolina alcohol" name="santolina alcohol"/>
+<entry term="selinene" name="selinene"/>
+<entry term="sesquiphellandrene" name="sesquiphellandrene"/>
+<entry term="sinensal" name="sinensal"/>
+<entry term="spathulenol" name="spathulenol"/>
+<entry term="squalene" name="squalene"/>
+<entry term="terpinen" name="terpinen"/>
+<entry term="terpinene" name="terpinene"/>
+<entry term="terpineol" name="terpineol"/>
+<entry term="terpinolene" name="terpinolene"/>
+<entry term="tetradecanal" name="tetradecanal"/>
+<entry term="tetradecane" name="tetradecane"/>
+<entry term="thujene" name="thujene"/>
+<entry term="thymol" name="thymol"/>
+<entry term="thymyl acetate" name="thymyl acetate"/>
+<entry term="tricosane" name="tricosane"/>
+<entry term="tricyclene" name="tricyclene"/>
+<entry term="triene" name="triene"/>
+<entry term="trimethyl" name="trimethyl"/>
+<entry term="vinyl" name="vinyl"/>
+<entry term="viridiflorene" name="viridiflorene"/>
+<entry term="widdrol" name="widdrol"/>
+<entry term="yl acetate" name="yl acetate"/>
+</dictionary>

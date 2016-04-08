@@ -40,17 +40,17 @@ public class SearchPluginOption extends AMIPluginOption {
 		}
 		commandString.append(" --sr.search");
 		commandString.append(" "+AMIArgProcessor.DICTIONARY_RESOURCE+"/"+searchDictionary+".xml");
-		plugin = "search";
+		pluginName = "search";
 //		commandString.append(plugin);
 //		commandString.append(searchDictionary);
 //		dictionary = getOption(null);
 		optionString = dictionary;
-		LOG.debug("SEARCH "+commandString);
 		System.out.print("SR: "+projectDir+"  ");
+		LOG.debug(">>>"+this.getClass()+" running "+commandString);
 		new SearchArgProcessor(commandString.toString()).runAndOutput();
 	}
 
-	protected String getPlugin(String plugin) {
+	protected String getPluginName(String plugin) {
 		return plugin;
 	}
 
@@ -65,29 +65,6 @@ public class SearchPluginOption extends AMIPluginOption {
 		return opt;
 	}
 
-//	protected String createFilterCommandString(String option) {
-//		String cmd = "--project "+projectDir;
-//		String xpathFlags = createXpathQualifier();
-//		option = dictionary;
-//		cmd += " --filter file(**/"+getPlugin(plugin)+"/"+option+"/results.xml)xpath("+resultXPathBase+xpathFlags+") ";
-//		cmd += " -o "+createSnippetsFilename(option)+"  ";
-//		LOG.debug("runFilterResultsXMLOptions: >>>> "+cmd);
-//		return cmd;
-//	}
-
-
-	protected void runMatchSummaryAndCount(String option) {
-		if (dictionary == null) {
-			resultXPathAttribute = "@word";
-			super.runMatchSummaryAndCount(option);
-		} else {
-			String cmd = "--project "+projectDir+" -i "+createSnippetsFilename(dictionary)+"  "
-					+ "--xpath //result/"+resultXPathAttribute+" --summaryfile "+createCountFilename(dictionary);
-			DefaultArgProcessor.CM_LOG.debug("runMatchSummaryAndCount: "+cmd);
-			new DefaultArgProcessor(cmd).runAndOutput();
-		}
-	}
-	
 	@Override
 	public CellRenderer getNewCellRenderer() {
 		CellRenderer cellRenderer = super.getNewCellRenderer();
@@ -96,15 +73,5 @@ public class SearchPluginOption extends AMIPluginOption {
 		cellRenderer.setUseHrefWords(1, "_");
 		return cellRenderer;
 	}
-
-//	protected boolean matches(String pluginOptionName) {
-//		String pluginOptionTag0 = pluginOptionName.split(":")[0];
-//		String pluginOptionTag1 = pluginOptionName.split(":")[1];
-//		LOG.trace("TAG "+pluginOptionTag0+" : "+pluginOptionName);
-//		boolean ok = SEARCH.equals(pluginOptionTag0) || TAG.equals(pluginOptionTag0);
-//		return ok;
-//	}
-
-
 
 }

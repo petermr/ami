@@ -11,7 +11,7 @@ import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.xmlcml.ami2.plugins.AMIArgProcessor;
 import org.xmlcml.ami2.plugins.AMIPlugin;
-import org.xmlcml.ami2.plugins.CommandProcessor;
+import org.xmlcml.ami2.plugins.CommandProcessorOld;
 import org.xmlcml.cmine.args.DefaultArgProcessor;
 import org.xmlcml.cmine.files.CTree;
 import org.xmlcml.cmine.files.ContentProcessor;
@@ -138,7 +138,9 @@ public class AMIFixtures {
 		Assert.assertEquals(size, reList.size());
 		if (elem < size) {
 			String results = reList.get(elem).toXML();
-			if (!results.startsWith(start)) {
+			int l =  Math.min(results.length(), start.length());
+			String start0 = results.substring(0, l);
+			if (!results.substring(0, l).equals(start0)) {
 				String ss = results.substring(0,  Math.min(300,  results.length()));
 				// replace " apos by \"
 				String sss = ss.replaceAll("\"", "\\\\\\\"");
@@ -148,11 +150,11 @@ public class AMIFixtures {
 		}
 	}
 
-	public static CommandProcessor createDefaultDirectoriesAndProcessor(String projectName) {
+	public static CommandProcessorOld createDefaultDirectoriesAndProcessor(String projectName) {
 		File rawDir = new File(AMIFixtures.TEST_AMI_DIR, projectName);
 		File projectDir = new File(AMIFixtures.TARGET_TEST, projectName);
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		LOG.debug("wrote clean copy: "+projectDir);
 		return commandProcessor;
 	}

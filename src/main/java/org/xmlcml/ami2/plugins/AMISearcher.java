@@ -14,9 +14,10 @@ import org.xmlcml.ami2.dictionary.DefaultAMIDictionary;
 import org.xmlcml.ami2.plugins.word.WordCollectionFactory;
 import org.xmlcml.cmine.files.AbstractSearcher;
 import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 import org.xmlcml.cmine.lookup.AbstractLookup;
 import org.xmlcml.cmine.lookup.DefaultStringDictionary;
+import org.xmlcml.xml.XMLUtil;
 import org.xmlcml.xml.XPathGenerator;
 
 import nu.xom.Attribute;
@@ -123,18 +124,24 @@ public class AMISearcher extends AbstractSearcher {
 	}
 
 
-	protected void addXpathAndAddtoResultsElement(Element elementToSearch, ResultsElement resultsElement,
-			ResultsElement resultsElementToAdd) {
+	protected void addXpathAndAddtoResultsElement(Element elementToSearch, ResultContainerElement resultsElement,
+			ResultContainerElement resultsElementToAdd) {
 		if (resultsElementToAdd == null) {
 			LOG.warn("null resultsElement");
 		} else {
 			for (ResultElement resultElement : resultsElementToAdd) {
 				resultElement.detach();
 				LOG.trace(">>> "+resultElement.toXML());
+				LOG.trace("EL "+elementToSearch.toXML());
 				XPathGenerator xPathGenerator = new XPathGenerator(elementToSearch);
-				xPathGenerator.setShort(true);
+				xPathGenerator.setShort(false);
+//				xPathGenerator.setShort(true);
 				String xpath = xPathGenerator.getXPath();
-				resultsElement.setXPath(xpath);
+				LOG.trace("XP"+xpath);
+				Element chunk = XMLUtil.getSingleElement(elementToSearch, xpath);
+				LOG.trace("chunk "+chunk.toXML());
+//				resultsElement.setXPath(xpath);
+				resultElement.setXPath(xpath);
 				resultsElement.appendChild(resultElement);
 				LOG.trace("XPATH added "+resultsElement.toXML());
 			}
@@ -268,7 +275,16 @@ public class AMISearcher extends AbstractSearcher {
 	 * @return
 	 */
 	public String getValue(Element xomElement) {
+		removeHeadElement(xomElement);
 		return xomElement.getValue();
+	}
+
+	protected void removeHeadElement(Element xomElement) {
+		Element headElement = XMLUtil.getSingleElement(xomElement, "/*/*[local-name()='head']");
+		if (headElement != null) {
+			headElement.detach();
+			LOG.trace("detaching head Element");
+		}
 	}
 
 	public boolean matchIncludingTrailingPunctuation(String raw, String term) {
@@ -286,13 +302,16 @@ public class AMISearcher extends AbstractSearcher {
 		return false;
 	}
 
-	public ResultsElement search(List<? extends Element> elements, ResultsElement resultsElement) {
+	public ResultContainerElement search(List<? extends Element> elements, ResultContainerElement resultsElement) {
 		for (Element element : elements) {
-			ResultsElement resultsElementToAdd = this.searchXomElement(element);
+			ResultContainerElement resultsElementToAdd = this.searchXomElement(element);
 			addXpathAndAddtoResultsElement(element, resultsElement, resultsElementToAdd);
 		}
 		postProcessResultsElement(resultsElement);
 		markFalsePositives(resultsElement, this.getOrCreateCurrentDictionary());
+		if (resultsElement.getChildCount() > 0) {
+			LOG.trace("childCount: "+resultsElement.getChildCount());
+		}
 		return resultsElement;
 	}
 
@@ -307,15 +326,15 @@ public class AMISearcher extends AbstractSearcher {
 	 * @param xomElement
 	 * @return
 	 */
-	public ResultsElement searchXomElement(Element xomElement) {
+	public ResultContainerElement searchXomElement(Element xomElement) {
 		String value = getValue(xomElement);
-		ResultsElement resultsElement = search(value); // crude to start with
+		ResultContainerElement resultsElement = search(value); // crude to start with
 		return resultsElement;
 	}
 
 
-	public ResultsElement search(String value) {
-		ResultsElement resultsElement = null;
+	public ResultContainerElement search(String value) {
+		ResultContainerElement resultsElement = null;
 		if (getDictionary() != null) {
 			resultsElement = searchWithDictionary(value);
 		} else if (getPattern() != null) {
@@ -324,8 +343,8 @@ public class AMISearcher extends AbstractSearcher {
 		return resultsElement;
 	}
 
-	public ResultsElement searchWithDictionary(List<String> strings) {
-		ResultsElement resultsElement = new ResultsElement();
+	public ResultContainerElement searchWithDictionary(List<String> strings) {
+		ResultContainerElement resultsElement = new ResultContainerElement();
 		if (strings != null) {
 			for (int pos = 0; pos < strings.size(); pos++) {
 				String firstword = strings.get(pos);
@@ -342,22 +361,26 @@ public class AMISearcher extends AbstractSearcher {
 		return resultsElement;
 	}
 
-	private ResultsElement searchWithDictionary(String value) {
-			ResultsElement resultsElement = new ResultsElement();
+	private ResultContainerElement searchWithDictionary(String value) {
+			ResultContainerElement resultsElement = new ResultContainerElement();
 			WordCollectionFactory wordCollectionFactory = amiArgProcessor.ensureWordCollectionFactory();
 			List<String> stringList = wordCollectionFactory.createWordList();
 			resultsElement = searchWithDictionary(stringList);
 			return resultsElement;
 		}
 
-	private ResultsElement searchWithPattern(String value) {
-		ResultsElement resultsElement = new ResultsElement();
+	private ResultContainerElement searchWithPattern(String value) {
+		ResultContainerElement resultsElement = new ResultContainerElement();
 		Matcher matcher = getPattern().matcher(value);
 		int start = 0;
 		while (matcher.find(start)) {
 			ResultElement resultElement = createResultElement(value, matcher);
 			resultsElement.appendChild(resultElement);
 			start = matcher.end();
+			LOG.trace("MATCHED");
+		}
+		if (resultsElement.getChildCount() > 0) {
+			LOG.trace("matched "+resultsElement.getChildCount());
 		}
 		return resultsElement;
 	}
@@ -384,7 +407,7 @@ public class AMISearcher extends AbstractSearcher {
 		return term;
 	}
 
-	protected void markFalsePositives(ResultsElement resultsElement, DefaultAMIDictionary dictionary) {
+	protected void markFalsePositives(ResultContainerElement resultsElement, DefaultAMIDictionary dictionary) {
 		if (dictionary != null && resultsElement != null) {
 			for (int i = resultsElement.size() - 1; i >= 0; i--) {
 				ResultElement resultElement = resultsElement.get(i);
@@ -405,7 +428,7 @@ public class AMISearcher extends AbstractSearcher {
 	 * 
 	 * @param resultsElement
 	 */
-	protected void postProcessResultsElement(ResultsElement resultsElement) {
+	protected void postProcessResultsElement(ResultContainerElement resultsElement) {
 		// no-op
 	}
 

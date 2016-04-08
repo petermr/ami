@@ -3,6 +3,7 @@ package org.xmlcml.ami2.dictionary.gene;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -38,9 +39,11 @@ public class HGNCDictionary extends DefaultAMIDictionary {
 	}
 	
 	private final static File HGNC_DIR = new File(GENE_DIR, HGNC);
+	private final static String HGNC_RESOURCE = GENE_RESOURCE+"/"+HGNC;
 	private final static File HGNC_JSON_FILE = new File(HGNC_DIR, "hgnc_complete_set.json");
 	private final static File HGNC_JSON_FILE1 = new File(HGNC_DIR, "hgnc_complete_set_readable.json");
 	private final static File HGNC_XML_FILE = new File(HGNC_DIR, "hgnc.xml");
+	private final static String HGNC_XML_RESOURCE = HGNC_RESOURCE+"/"+ "hgnc.xml";
 	
 	public static HGNCDictionary DEFAULT_HGNCDictionary = null;
 	
@@ -51,9 +54,16 @@ public class HGNCDictionary extends DefaultAMIDictionary {
 	}
 	
 	private void init() {
-		readHGNCXML();
+//		readHGNCXML();
+		readHGNCXMLResource();
 	}
 
+	
+	private void readHGNCXMLResource() {
+		InputStream is = this.getClass().getResourceAsStream(HGNC_XML_RESOURCE);
+		readDictionary(is);
+	}
+		
 	private void readHGNCXML() {
 		if (!HGNC_XML_FILE.exists()) {
 			readHGNCJson();

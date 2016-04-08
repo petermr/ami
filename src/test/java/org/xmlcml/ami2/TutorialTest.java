@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlcml.ami2.plugins.AMIArgProcessor;
-import org.xmlcml.ami2.plugins.CommandProcessor;
+import org.xmlcml.ami2.plugins.CommandProcessorOld;
 import org.xmlcml.ami2.plugins.ResultsAnalysis;
 import org.xmlcml.ami2.plugins.ResultsAnalysis.SummaryType;
 import org.xmlcml.ami2.plugins.gene.GeneArgProcessor;
@@ -95,7 +95,7 @@ public class TutorialTest {
 	public void testIdentifier() throws Exception {
 		CMineTestFixtures.cleanAndCopyDir(new File("src/test/resources/org/xmlcml/ami2/tutorial/plos10"), new File("target/ident10"));
 		String args = "-q target/ident10/ -i scholarly.html --context 35 50 --id.identifier --id.regex regex/identifiers.xml --id.type bio.ena";
-		IdentifierArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
+		AMIArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
 		identifierArgProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(identifierArgProcessor, 1, 0, 
 				"<results title=\"bio.ena\" />"
@@ -108,7 +108,7 @@ public class TutorialTest {
 	public void testIdentifierClin() throws Exception {
 		CMineTestFixtures.cleanAndCopyDir(new File("src/test/resources/org/xmlcml/ami2/tutorial/plos10"), new File("target/clin10"));
 		String args = "-q target/clin10/ -i scholarly.html --context 35 50 --id.identifier --id.regex regex/identifiers.xml --id.type clin.nct clin.isrctn";
-		IdentifierArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
+		AMIArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
 		identifierArgProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(identifierArgProcessor, 2, 0, 
 				"<results title=\"clin.isrctn\" />"
@@ -173,7 +173,7 @@ public class TutorialTest {
 	public void testGene() throws Exception {
 		CMineTestFixtures.cleanAndCopyDir(new File("src/test/resources/org/xmlcml/ami2/tutorial/plos10"), new File("target/gene10"));
 		String args = "-q target/gene10/e0115544 -i scholarly.html --context 35 50 --g.gene --g.type human mouse";
-		GeneArgProcessor geneArgProcessor = new GeneArgProcessor(args);
+		AMIArgProcessor geneArgProcessor = new GeneArgProcessor(args);
 		geneArgProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(geneArgProcessor, 2, 0, 
 				"<results title=\"human\"><result pre=\"the most effective model of care ( \" exact=\"DU\" post=\" \" xpath=\"/*[local-name()='html'][1]/*[local-name()='body'][1]/*[local-name()='div'][1]/*[local-name()='div'][6]/*[local-name()='div'][2]/*[local-name()='div'][3]/*[local-name()='div'][1]/*[local-name()='div']["
@@ -396,7 +396,7 @@ public class TutorialTest {
 				
 				
 //		String cmd = "species(binomial,genus) gene(human) sequence(dnaprimer) word(search)w.search:/org/xmlcml/ami2/plugins/dictionary/tropicalVirus.xml word(frequencies)xpath:@count>20~stopwords:pmcstop.txt_stopwords.txt"; 
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		commandProcessor.processCommands(cmd);
 
 	}
@@ -407,7 +407,7 @@ public class TutorialTest {
 		File rawDir = new File(AMIFixtures.TEST_AMI_DIR, project);
 		File projectDir = new File("target/tutorial/zika");
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		commandProcessor.processCommands(""
 				+ "species(binomial,genus) "
 				+ " gene(human)"
@@ -423,7 +423,7 @@ public class TutorialTest {
 		File projectDir = new File("target/tutorial/"+project+"/");
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
 		
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		commandProcessor.processCommands(""
 				+ "species(binomial,genus) "
 				+ " gene(human)"
@@ -469,7 +469,7 @@ public class TutorialTest {
 //		String cmd = "word(frequencies)xpath:@count>20~w.stopwords:pmcstop.txt_stopwords.txt"; 
 		String cmd = "sequence(dnaprimer) gene(human) "
 		+ "word(search)w.search:/org/xmlcml/ami2/plugins/dictionary/tropicalVirus.xml";
-		CommandProcessor commandProcessor = new CommandProcessor(projectDir);
+		CommandProcessorOld commandProcessor = new CommandProcessorOld(projectDir);
 		commandProcessor.processCommands(cmd);
 
 	}

@@ -1,0 +1,27 @@
+<argList name="summary">
+	<arg name="summary" 
+		long="--summary"
+		args=""
+		countRange="{0,0}"
+		runMethod="runSummary"
+		outputMethod="outputSummary"
+		>
+		<help>
+		</help>
+	</arg>	
+	
+	<arg name="type"
+	    long="--type"
+	    args="type"
+	    class="java.lang.String"
+	    parseMethod="parseType"
+	    pattern="(datatables|frequencies)"
+	    countRange="{1,1}"
+	    >
+	    <help>
+	    The type of the summary. see above. Currently dataTables and frequencies
+	    </help>
+	</arg>
+
+</argList>
+			

@@ -27,6 +27,7 @@ public class GeneSearcher extends AMISearcher {
 	@Override 
 	// this will probably disappear
 	public String getValue(Element xomElement) {
+		super.removeHeadElement(xomElement);
 		String xmlString = xomElement.toXML();
 		// this is ucky, but since we know the HTML is normalized it's probably OK
 		xmlString = xomElement.toXML().replaceAll(DefaultArgProcessor.WHITESPACE, " ");

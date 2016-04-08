@@ -11,7 +11,7 @@ import org.xmlcml.ami2.plugins.AMISearcher;
 import org.xmlcml.cmine.args.ArgIterator;
 import org.xmlcml.cmine.args.ArgumentOption;
 import org.xmlcml.cmine.files.ContentProcessor;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 
 /** 
  * Processes commandline arguments.
@@ -28,7 +28,7 @@ public class RegexArgProcessor extends AMIArgProcessor {
 	static final String TILDE = "~";
 	static final String TILDE_SUFFIX = "(?:[^\\\\s]*\\\\p{Punct}?)";
 	
-	private Map<String, ResultsElement> resultsByCompoundRegex;
+	private Map<String, ResultContainerElement> resultsByCompoundRegex;
 	protected List<String> words;
 	
 	public RegexArgProcessor() {
@@ -92,7 +92,7 @@ public class RegexArgProcessor extends AMIArgProcessor {
 		}
 		for (CompoundRegex compoundRegex : compoundRegexList) {
 			String regexTitle = compoundRegex.getTitle();
-			ResultsElement resultsElement = resultsByCompoundRegex.get(regexTitle);
+			ResultContainerElement resultsElement = resultsByCompoundRegex.get(regexTitle);
 			resultsElement.setTitle(regexTitle);
 			currentContentProcessor.addResultsElement(resultsElement);
 		}
@@ -101,10 +101,10 @@ public class RegexArgProcessor extends AMIArgProcessor {
 
 	private void runRegex() {
 		ensureSectionElements();
-		resultsByCompoundRegex = new HashMap<String, ResultsElement>();
+		resultsByCompoundRegex = new HashMap<String, ResultContainerElement>();
 		for (CompoundRegex compoundRegex : compoundRegexList) {
 			AMISearcher regexSearcher = createSearcher(this, compoundRegex);
-			ResultsElement resultsElement = regexSearcher.search(sectionElements, createResultsElement());
+			ResultContainerElement resultsElement = regexSearcher.search(sectionElements, createResultsElement());
 			resultsByCompoundRegex.put(compoundRegex.getTitle(), resultsElement);
 		}
 	}

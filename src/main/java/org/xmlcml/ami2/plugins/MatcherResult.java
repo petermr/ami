@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 
 import nu.xom.IllegalNameException;
 
@@ -104,8 +104,8 @@ public class MatcherResult {
 
 	}
 
-	public ResultsElement createResultsElement() {
-		ResultsElement resultElementList = new ResultsElement();
+	public ResultContainerElement createResultsElement() {
+		ResultContainerElement resultElementList = new ResultContainerElement();
 		ensureNamedGroupListList();
 		for (NamedGroupList namedGroupList : namedGroupListList) {
 			try {

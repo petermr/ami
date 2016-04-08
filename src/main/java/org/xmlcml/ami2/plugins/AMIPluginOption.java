@@ -1,6 +1,5 @@
 package org.xmlcml.ami2.plugins;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,15 +16,13 @@ import org.xmlcml.ami2.plugins.sequence.SequencePluginOption;
 import org.xmlcml.ami2.plugins.species.SpeciesPluginOption;
 import org.xmlcml.ami2.plugins.word.WordPluginOption;
 import org.xmlcml.cmine.args.DefaultArgProcessor;
+import org.xmlcml.cmine.files.CProject;
 import org.xmlcml.cmine.files.OptionFlag;
 import org.xmlcml.cmine.files.PluginOption;
 import org.xmlcml.cmine.util.CellRenderer;
 
-public abstract class AMIPluginOption extends PluginOption {
+public class AMIPluginOption extends PluginOption {
 
-	private static final String WORD = "word";
-	private static final String SPECIES = "species";
-	private static final String SEQUENCE = "sequence";
 	private static final Logger LOG = Logger.getLogger(AMIPluginOption.class);
 	static {
 		LOG.setLevel(Level.DEBUG);
@@ -33,35 +30,44 @@ public abstract class AMIPluginOption extends PluginOption {
 	
 	public static Pattern COMMAND = Pattern.compile("(.*)\\((.*)\\)(.*)");
 	
-	public final static List<String> COMMANDS = Arrays.asList( new String[] {
-	GenePluginOption.TAG,
-//	IdentifierPluginOption.TAG,
-	RegexPluginOption.TAG,
-	SequencePluginOption.TAG,
-	SpeciesPluginOption.TAG,
-	WordPluginOption.TAG,
-	});
-
 	public final static String WIKIPEDIA_HREF0 = "http://en.wikipedia.org/wiki/";
 	public final static String WIKIPEDIA_HREF1 = "";
+	protected List<Argument> argumentList;
+
+	private CMineCommand cMineCommand;
 	
-	protected AMIPluginOption(String tag) {
-		this.plugin = tag;
+	protected AMIPluginOption(String pluginName) {
+		this.pluginName = pluginName;
+		setXpath();
+	}
+	
+	public AMIPluginOption(String pluginName, String option) {
+		this(pluginName);
+		this.optionName = option;
+		setXpath();
 	}
 	
 	public AMIPluginOption(String plugin, List<String> options, List<String> flags) {
 		this(plugin);
 		this.options = options;
+		this.optionName = options.get(0);
 		this.flags = flags;
 		this.optionString = StringUtil.join(options, " ");
 		LOG.trace("optionString: "+optionString);
-		this.resultXPathBase = "//result";
-		this.resultXPathAttribute = "@exact";
+		
+		setXpath();
 
+	}
+
+	private void setXpath() {
+		this.resultXPathBase = "//result";
+//		this.resultXPathAttribute = "@exact";
+		this.resultXPathAttribute = "";
 	}
 
 	/** this is where the subclassing is created.
 	 * 
+	 * // now replaced by reflection
 	 * */
 	public static AMIPluginOption createPluginOption(String cmd) {
 		Matcher matcher = COMMAND.matcher(cmd);
@@ -103,50 +109,67 @@ public abstract class AMIPluginOption extends PluginOption {
 		return pluginOption;
 	}
 
-	private void setOptionFlags(List<OptionFlag> optionFlags) {
-		this.optionFlags = optionFlags;
+	protected void run() {
+		throw new RuntimeException("BUG: "+this.getClass()+" must override run()");
 	}
-
-	List<OptionFlag> getOptionFlags() {
-		return this.optionFlags;
-	}
-
-	public void setProject(File projectDir) {
-		this.projectDir = projectDir;
-	}
-	
-	protected abstract void run();
 
 	// create optionSnippets
 	public void runFilterResultsXMLOptions() {
-		for (String option : options) {
-			runFilterResultsXMLOptions(option);
+		if (options != null) {
+			LOG.warn("LIST of options is deprecated");
+			for (String optionName : options) {
+				createAndRunPluginOption(optionName);
+			}
+		} else if (optionName != null) {
+			createAndRunPluginOption(optionName);
 		}
 	}
+
+	private void createAndRunPluginOption(String optionName) {
+		AMIPluginOption pluginOption = new AMIPluginOption(this.pluginName, optionName);
+		pluginOption.setProjectDir(projectDir);
+		pluginOption.runFilterResultsXMLOptions1();
+	}
 	
-	private void runFilterResultsXMLOptions(String option) {
-		String filterCommandString = createFilterCommandString(option);
-		DefaultArgProcessor.CM_LOG.debug("filter: "+filterCommandString);
-		System.out.print(option);
-		new DefaultArgProcessor(filterCommandString).runAndOutput();
+	/** we use a new DefaultArgProcessor to run this.*/
+	 // --project target/tutorial/zika10old 
+	 //   --filter file(**/results/species/binomial/results.xml)xpath(//result)
+	 //   -o summary/species/binomial/snippets.xml  
+	private void runFilterResultsXMLOptions1() {
+		LOG.trace("projDIR "+projectDir);
+		String filterCommandString = createFilterCommandString(optionName);
+		DefaultArgProcessor argProcessor = new DefaultArgProcessor(filterCommandString);
+		LOG.debug("filter "+filterCommandString);
+		argProcessor.getCProject().setDirectory(projectDir);
+		argProcessor.runAndOutput();
+		return;
 	}
 
 	protected String createFilterCommandString(String option) {
 		String cmd = "--project "+projectDir;
 		String xpathFlags = createXpathQualifier();
-		cmd += " --filter file(**/"+getPlugin(plugin)+"/"+getOption(option)+"/results.xml)xpath("+resultXPathBase+xpathFlags+") ";
+		String resultsFileName = getResultsFileName(option);
+//		cmd += " --filter file(**/"+resultsFileName+")xpath("+resultXPathBase+xpathFlags+") ";
+		cmd += " --filter file(**/results/"+resultsFileName+")xpath("+resultXPathBase;
+		if (resultXPathAttribute.length() > 0) {
+			cmd += "/"+resultXPathAttribute;
+		}
+		cmd += ") ";
 		cmd += " -o "+createSnippetsFilename(option)+"  ";
-		DefaultArgProcessor.CM_LOG.debug("runFilterResultsXMLOptions: "+cmd);
-		System.out.print(option);
+		LOG.trace("runFilterResultsXMLOptions: "+cmd);
 		return cmd;
 	}
 
-	protected String getPlugin(String plugin) {
+	private String getResultsFileName(String option) {
+		return getPluginName(pluginName)+"/"+getOption(option)+"/results.xml";
+	}
+
+	protected String getPluginName(String plugin) {
 		return plugin;
 	}
 
-	public String getPlugin() {
-		return plugin;
+	public String getPluginName() {
+		return pluginName;
 	}
 
 	protected String createXpathQualifier() {
@@ -186,46 +209,60 @@ public abstract class AMIPluginOption extends PluginOption {
 	}
 
 	protected void runMatchSummaryAndCount(String option) {
+		String xpath = "";
+		if (resultXPathAttribute.startsWith("@")) {
+			xpath = "/"+resultXPathAttribute;
+		} else if (!resultXPathAttribute.equals("")) {
+			xpath = "/"+resultXPathAttribute;
+		}
+		String snippetsFilename = createSnippetsFilename(option);
+		String countFilename = createCountFilename(option);
+		String documentCountFilename = createDocumentCountFilename(option);
+		
+		LOG.debug("Summary: "+countFilename+" / "+documentCountFilename);
 		String cmd = "--project "+projectDir
-				+ " -i "+createSnippetsFilename(option)
-				+ " --xpath //result/"+resultXPathAttribute
-				+ " --summaryfile "+createCountFilename(option)
-				+ " --dffile "+createDocumentCountFilename(option)
+				+ " -i "+ snippetsFilename
+				+ " --xpath //result"+xpath
+				+ " --summaryfile "+countFilename
+				+ " --dffile "+documentCountFilename
 				;
-		DefaultArgProcessor.CM_LOG.debug("runMatchSummaryAndCount: "+cmd);
-		System.out.print("C: "+option);
+		LOG.trace("super.runMatchSummaryAndCount: "+cmd);
+		//System.out.print("C: "+option);
 		new DefaultArgProcessor(cmd).runAndOutput();
+		return;
 	}
 	
 
 
 	// analyze optionSnippets
 	public void runSummaryAndCountOptions() {
-		for (String option : options) {
-			runMatchSummaryAndCount(option);
+		if (options != null) {
+			LOG.warn("OPTIONS is obsolete");
+			for (String option : options) {
+				runMatchSummaryAndCount(option);
+			}
+		} else {
+			runMatchSummaryAndCount(optionName);
 		}
 	}
 
-	public String toString() {
-		return plugin+"("+options+")"+optionFlags;
-	}
-
 	protected String createSnippetsFilename(String option) {
-		return plugin+"."+getOption(option)+".snippets.xml";
+		String name = getSnippetsName()+"/"+CProject.SNIPPETS_XML;
+		return name;
 	}
 
 	protected String createCountFilename(String option) {
-		return plugin+"."+getOption(option)+".count.xml";
+		String name = getSnippetsName()+"/"+CProject.COUNT_XML;
+		LOG.debug("Counts "+name);
+		return name;
 	}
 	
 	protected String createDocumentCountFilename(String option) {
-		return plugin+"."+getOption(option)+".documents.xml";
+		String name = getSnippetsName()+"/"+CProject.DOCUMENTS_XML;
+		LOG.debug("Documents "+name);
+		return name;
 	}
 	
-	protected String getOption(String option) {
-		return option;
-	}
-
 	protected StringBuilder createCoreCommandStringBuilder() {
 		StringBuilder commandStringBuilder = new StringBuilder("--project "+projectDir+" -i scholarly.html");
 		commandStringBuilder.append(getOptionFlagString("context", " "));
@@ -240,7 +277,53 @@ public abstract class AMIPluginOption extends PluginOption {
 	protected boolean matches(String pluginOptionName) {
 		String pluginOptionTag = pluginOptionName.split(":")[0];
 		LOG.trace("TAG "+pluginOptionTag);
-		return getPlugin().equals(pluginOptionTag);
+		return getPluginName().equals(pluginOptionTag);
 	}
+
+	public void setResultXPathAttribute(String resultXPathAttribute) {
+		this.resultXPathAttribute = resultXPathAttribute;
+	}
+
+	public void setPluginName(String name) {
+		this.pluginName = name;
+	}
+
+	public void setOptionName(String name) {
+		this.optionName = name;
+		this.optionString = name;
+	}
+	
+	public String toString() {
+		return pluginName+"("+options+"/"+optionName+")"+optionFlags;
+	}
+
+	public void setArgumentList(List<Argument> argumentList) {
+		this.argumentList = argumentList;
+	}
+
+	protected String getArgumentString() {
+		StringBuilder sb = new StringBuilder();
+		if (argumentList != null) {
+			for (Argument argument : argumentList) {
+				sb.append(argument.getArgumentString());
+			}
+		}
+		return sb.toString();
+	}
+
+	protected String createCommandString(String cmd) {
+		cmd += this.getArgumentString();
+		return cmd;
+	}
+
+	public void setCMineCommand(CMineCommand cMineCommand) {
+		this.cMineCommand = cMineCommand;
+		this.setPluginName(cMineCommand.getName());
+		this.setOptionName(cMineCommand.getOptionName()); // this is obsolete but necessary
+		this.setProjectDir(cMineCommand.getProjectDir());
+		this.setArgumentList(cMineCommand.getArgumentList());
+	}
+
+
 
 }

@@ -12,6 +12,7 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlcml.ami2.AMIFixtures;
+import org.xmlcml.ami2.plugins.AMIArgProcessor;
 import org.xmlcml.ami2.plugins.identifier.IdentifierArgProcessor;
 import org.xmlcml.ami2.plugins.identifier.IdentifierPlugin;
 import org.xmlcml.cmine.args.DefaultArgProcessor;
@@ -32,7 +33,7 @@ public class IdentifierArgProcessorTest {
 		File newDir = new File("target/plosone/identifier");
 		FileUtils.copyDirectory(AMIFixtures.TEST_PLOSONE_SEQUENCE_0121780, newDir);
 		String args = "--id.identifier --context 35 50 --id.regex regex/identifiers.xml --id.type bio.ena bio.pdb meta.orcid -q "+newDir+" -i scholarly.html"; 
-		IdentifierArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
+		AMIArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
 		identifierArgProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(identifierArgProcessor, 3, 0, 
 				"<results title=\"bio.ena\"><result pre=\"ecies. (GenBank accession numbers; \" exact=\"GQ906358\" post=\", NR102976 and KC954171), 3 Arcobacter species (NR\" xpath=\"/html[1]/body[1]/div[1]/div[6]/div[4]/"
@@ -68,7 +69,7 @@ public class IdentifierArgProcessorTest {
 		FileUtils.copyDirectory(AMIFixtures.TEST_TRIALS_16_1_1, newDir);
 		String args = "-q "+newDir+" -i scholarly.html --context 25 40 "
 				+ "--id.identifier --id.regex regex/identifiers.xml --id.type clin.nct clin.isrctn";
-		IdentifierArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
+		AMIArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
 		identifierArgProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(identifierArgProcessor, 2, 0, 
 				"<results title=\"clin.isrctn\"><result pre=\"Controlled Trial Number (\" exact=\"ISRCTN): 13837944\" post=\", UK Clinical Research Network (UKCRN) S\" name=\"clin.isrctn\" /></results>"
@@ -85,7 +86,7 @@ public class IdentifierArgProcessorTest {
 		File newDir = new File("target/plosone/identifier");
 		FileUtils.copyDirectory(AMIFixtures.TEST_PLOSONE_SEQUENCE_0121780, newDir);
 		String args = "--id.identifier --context 35 50 --id.type ena -q "+newDir+" -i scholarly.html --lookup wikipedia"; 
-		IdentifierArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
+		AMIArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
 		identifierArgProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(identifierArgProcessor, 1, 0, 
 				"<results title=\"mend me\">"
@@ -98,7 +99,7 @@ public class IdentifierArgProcessorTest {
 		File newDir = new File("target/plosone/identifier");
 		FileUtils.copyDirectory(AMIFixtures.TEST_PLOSONE_SEQUENCE_0121780, newDir);
 		String args = "--id.identifier --context 35 50 --id.regex regex/identifiers.xml --id.type bio.ena -q "+newDir+" -i scholarly.html"; 
-		IdentifierArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
+		AMIArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
 		identifierArgProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(identifierArgProcessor, 1, 0, 
 				"<results title=\"bio.ena\"><result pre=\"ecies. (GenBank accession numbers; \" exact=\"GQ906358\" post=\", NR102976 and KC954171), 3 Arcobacter species (NR\" xpath=\"/html[1]/body[1]/div[1]/div[6]/div[4]/"
@@ -114,7 +115,7 @@ public class IdentifierArgProcessorTest {
 		File newDir = new File("target/plosone/identifiers");
 		FileUtils.copyDirectory(new File("examples/"), newDir);
 		String args = "--id.identifier --context 35 50 --id.regex regex/identifiers.xml --id.type clin.nct clin.isrctn -q "+newDir+" -i scholarly.html"; 
-		IdentifierArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
+		AMIArgProcessor identifierArgProcessor = new IdentifierArgProcessor(args);
 		identifierArgProcessor.runAndOutput();
 		AMIFixtures.checkResultsElementList(identifierArgProcessor, 2, 0, 
 				"<results title=\"clin.nct\" />" // empty?

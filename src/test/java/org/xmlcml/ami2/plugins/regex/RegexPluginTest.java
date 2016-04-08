@@ -16,7 +16,7 @@ import org.xmlcml.ami2.AMIFixtures;
 import org.xmlcml.ami2.plugins.AMIPlugin;
 import org.xmlcml.cmine.files.CTree;
 import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 import org.xmlcml.cmine.util.CMineTestFixtures;
 import org.xmlcml.html.HtmlA;
 import org.xmlcml.html.HtmlElement;
@@ -122,7 +122,7 @@ public class RegexPluginTest {
 	
 	private void annotate(HtmlElement htmlElement, File resultsXml) {
 		Element resultsElement0 = XMLUtil.parseQuietlyToDocument(resultsXml).getRootElement();
-		ResultsElement resultsElement = ResultsElement.createResultsElement(resultsElement0);
+		ResultContainerElement resultsElement = ResultContainerElement.createResultsElement(resultsElement0);
 		List<ResultElement> resultElements = resultsElement.getOrCreateResultElementList();
 		for (ResultElement resultElement : resultElements) {
 			String xpath = resultElement.getXPath();

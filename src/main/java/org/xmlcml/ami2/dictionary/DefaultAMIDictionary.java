@@ -76,12 +76,15 @@ public class DefaultAMIDictionary extends DefaultStringDictionary {
 	/** later these should be read in from args.xml ...
 	 * 
 	 */
-	protected static final File AMI_DIR        = new File("src/main/resources/org/xmlcml/ami2/plugins/");
-	protected static final File DICTIONARY_DIR = new File(AMI_DIR, "dictionary");
-	protected static final File GENE_DIR       = new File(AMI_DIR, "gene");
-	protected static final File PLACES_DIR     = new File(AMI_DIR, "places");
-	protected static final File SPECIES_DIR    = new File(AMI_DIR, "species");
-	protected static final File SYNBIO_DIR     = new File(AMI_DIR, "synbio");
+	protected static final File AMI_PLUGINS_DIR        = new File("src/main/resources/org/xmlcml/ami2/plugins/");
+	protected static final String AMI_PLUGINS_RESOURCE = "/org/xmlcml/ami2/plugins";
+	protected static final File DICTIONARY_DIR = new File(AMI_PLUGINS_DIR, "dictionary");
+	protected static final String GENE          = "gene";
+	protected static final File GENE_DIR       = new File(AMI_PLUGINS_DIR, GENE);
+	protected static final String GENE_RESOURCE  = AMI_PLUGINS_RESOURCE+"/"+GENE;
+	protected static final File PLACES_DIR     = new File(AMI_PLUGINS_DIR, "places");
+	protected static final File SPECIES_DIR    = new File(AMI_PLUGINS_DIR, "species");
+	protected static final File SYNBIO_DIR     = new File(AMI_PLUGINS_DIR, "synbio");
 	protected static final String UTF_8        = "UTF-8";
 	
 	protected Map<DictionaryTerm, String> namesByTerm;
@@ -180,7 +183,7 @@ public class DefaultAMIDictionary extends DefaultStringDictionary {
 		return;
 	}
 
-	private void readDictionary(InputStream is) {
+	protected void readDictionary(InputStream is) {
 		dictionaryElement = XMLUtil.parseQuietlyToDocument(is).getRootElement();
 		namesByTerm = new HashMap<DictionaryTerm, String>();
 		rawTermSet = new HashSet<String>();

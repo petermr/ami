@@ -15,7 +15,7 @@ import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlOtu;
 import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlTree;
 import org.xmlcml.cmine.args.ArgIterator;
 import org.xmlcml.cmine.args.ArgumentOption;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 import org.xmlcml.graphics.svg.text.SVGPhrase;
 import org.xmlcml.norma.editor.Extraction;
 import org.xmlcml.norma.image.ocr.HOCRReader;
@@ -122,7 +122,7 @@ public class PhyloTreeArgProcessor extends AMIArgProcessor {
 	}
 
 	public void outputResultsElement(ArgumentOption option) {
-		ResultsElement resultsElement = new ResultsElement(TREES);
+		ResultContainerElement resultsElement = new ResultContainerElement(TREES);
 		LOG.trace("outputResultElement NYI "+output+"; need to add tree");
 	}
 	

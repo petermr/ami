@@ -2,9 +2,9 @@ package org.xmlcml.ami2.plugins.search;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 
-public class SearchResultsElement extends ResultsElement {
+public class SearchResultsElement extends ResultContainerElement {
 
 	
 	private static final Logger LOG = Logger

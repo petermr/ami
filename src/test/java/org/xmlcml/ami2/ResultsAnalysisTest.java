@@ -14,7 +14,7 @@ import org.junit.Test;
 import org.xmlcml.ami2.plugins.ResultsAnalysis;
 import org.xmlcml.ami2.plugins.ResultsAnalysis.SummaryType;
 import org.xmlcml.cmine.files.CProject;
-import org.xmlcml.cmine.files.ProjectSnippetsTree;
+import org.xmlcml.cmine.files.PluginSnippetsTree;
 import org.xmlcml.cmine.util.CMineTestFixtures;
 import org.xmlcml.cmine.util.DataTablesTool;
 import org.xmlcml.html.HtmlHtml;
@@ -48,9 +48,9 @@ public class ResultsAnalysisTest {
 		File targetDir = new File("target/relevance/zika");
 		CMineTestFixtures.cleanAndCopyDir(ZIKA_DIR, targetDir);
 		Element snippetsTreeXML = XMLUtil.parseQuietlyToDocument(new File(targetDir, "sequence.dnaprimer.snippets.xml")).getRootElement();;
-		ProjectSnippetsTree projectSnippetsTree = ProjectSnippetsTree.createProjectSnippetsTree(snippetsTreeXML);
-		Assert.assertEquals("snippetsTrees", 2, projectSnippetsTree.getOrCreateSnippetsTreeList().size());
-		List<String> filenames = projectSnippetsTree.getOrCreateFilenameList();
+		PluginSnippetsTree pluginSnippetsTree = PluginSnippetsTree.createPluginSnippetsTree(snippetsTreeXML);
+		Assert.assertEquals("snippetsTrees", 2, pluginSnippetsTree.getOrCreateSnippetsTreeList().size());
+		List<String> filenames = pluginSnippetsTree.getOrCreateFilenameList();
 		Assert.assertEquals("filenames",  "[target/tutorial/zika/PMC4654492/results/sequence/dnaprimer/results.xml,"
 				+ " target/tutorial/zika/PMC4671560/results/sequence/dnaprimer/results.xml]", filenames.toString());
 		
@@ -61,13 +61,13 @@ public class ResultsAnalysisTest {
 	 */
 	@Test
 	public void testSummarizeAllTypes() throws IOException {
-		ProjectSnippetsTree projectsSnippetsTree = CMineTestFixtures.createProjectSnippetsTree(ZIKA_DIR, "gene.human.snippets.xml");
+		PluginSnippetsTree projectsSnippetsTree = CMineTestFixtures.createPluginSnippetsTree(ZIKA_DIR, "gene.human.snippets.xml");
 		Assert.assertEquals("gene snippetsTrees", 10, projectsSnippetsTree.getOrCreateSnippetsTreeList().size());
-		projectsSnippetsTree = CMineTestFixtures.createProjectSnippetsTree(ZIKA_DIR, "sequence.dnaprimer.snippets.xml");
+		projectsSnippetsTree = CMineTestFixtures.createPluginSnippetsTree(ZIKA_DIR, "sequence.dnaprimer.snippets.xml");
 		Assert.assertEquals("dnaprimer snippetsTrees", 2, projectsSnippetsTree.getChildElements().size());
-		projectsSnippetsTree = CMineTestFixtures.createProjectSnippetsTree(ZIKA_DIR, "species.binomial.snippets.xml");
+		projectsSnippetsTree = CMineTestFixtures.createPluginSnippetsTree(ZIKA_DIR, "species.binomial.snippets.xml");
 		Assert.assertEquals("binomial snippetsTrees", 76, projectsSnippetsTree.getChildElements().size());
-		projectsSnippetsTree = CMineTestFixtures.createProjectSnippetsTree(ZIKA_DIR, "species.genus.snippets.xml");
+		projectsSnippetsTree = CMineTestFixtures.createPluginSnippetsTree(ZIKA_DIR, "species.genus.snippets.xml");
 		Assert.assertEquals("genus snippetsTrees", 64, projectsSnippetsTree.getChildElements().size());
 	}
 	
@@ -75,7 +75,7 @@ public class ResultsAnalysisTest {
 	public void testResultsAnalysis() throws IOException {
 		ResultsAnalysis resultsAnalysis = new ResultsAnalysis();
 		resultsAnalysis.addDefaultSnippets(ZIKA_DIR);
-		Assert.assertTrue(resultsAnalysis.getProjectSnippetsTreeByPluginOption().size() > 3);
+		Assert.assertTrue(resultsAnalysis.getPluginSnippetsTreeByPluginOption().size() > 3);
 		List<String> cTreeNameList = resultsAnalysis.getSortedCTreeNameList();
 /*		
 		Assert.assertEquals("projects", "["

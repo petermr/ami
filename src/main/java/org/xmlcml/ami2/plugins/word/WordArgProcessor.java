@@ -18,7 +18,7 @@ import org.xmlcml.cmine.args.ArgIterator;
 import org.xmlcml.cmine.args.ArgumentOption;
 import org.xmlcml.cmine.files.CTree;
 import org.xmlcml.cmine.files.ContentProcessor;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 import org.xmlcml.cmine.files.ResultsElementList;
 import org.xmlcml.cmine.lookup.DefaultStringDictionary;
 import org.xmlcml.euclid.IntRange;
@@ -74,7 +74,7 @@ public class WordArgProcessor extends AMIArgProcessor {
 	WordResultsElement aggregatedFrequenciesElement;
 	private IntRange wordCount;
 	private WordResultsElement booleanFrequencyElement;
-	private Map<String, ResultsElement> resultsByDictionary;
+	private Map<String, ResultContainerElement> resultsByDictionary;
 	
 	public WordArgProcessor() {
 		super();
@@ -216,7 +216,7 @@ public class WordArgProcessor extends AMIArgProcessor {
 		currentContentProcessor.clearResultsElementList();
 
 		for (String title : resultsByDictionary.keySet()) {
-			ResultsElement resultsElement = resultsByDictionary.get(title);
+			ResultContainerElement resultsElement = resultsByDictionary.get(title);
 			resultsElement.setTitle(title);
 			currentContentProcessor.addResultsElement(resultsElement);
 		}
@@ -225,7 +225,7 @@ public class WordArgProcessor extends AMIArgProcessor {
 	
 
 
-	private static void writeResultsElement(File outputFile, ResultsElement resultsElement) {
+	private static void writeResultsElement(File outputFile, ResultContainerElement resultsElement) {
 		try {
 			outputFile.getParentFile().mkdirs();
 			XMLUtil.debug(resultsElement, new FileOutputStream(outputFile), 1);
@@ -246,7 +246,7 @@ public class WordArgProcessor extends AMIArgProcessor {
 	public WordResultsElementList aggregateOverCMDirList(String pluginName, String methodName) {
 		WordResultsElementList resultsElementList = new WordResultsElementList();
 		for (CTree cTree : cTreeList) {
-			ResultsElement resultsElement = cTree.getResultsElement(pluginName, methodName);
+			ResultContainerElement resultsElement = cTree.getResultsElement(pluginName, methodName);
 			if (resultsElement == null) {
 				LOG.error("Null results element, skipped "+cTree.getDirectory());
 			} else {

@@ -6,9 +6,9 @@ import java.util.List;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cmine.files.ResultContainerElement;
 
-public class SpeciesResultsElement extends ResultsElement {
+public class SpeciesResultsElement extends ResultContainerElement {
 
 	
 	private static final Logger LOG = Logger

@@ -12,19 +12,20 @@ import org.xmlcml.euclid.Util;
  * @author pm286
  *
  */
-public class CMineCommand {
+@Deprecated
+public class CMineCommandOld {
 
-	private static final Logger LOG = Logger.getLogger(CMineCommand.class);
+	private static final Logger LOG = Logger.getLogger(CMineCommandOld.class);
 	static {
-		LOG.setLevel(Level.DEBUG);
+		LOG.setLevel(Level.INFO);
 	}
 	private CommandOption option;
 	private String name;
 	private AMIPluginOption pluginOption;
-	private CMine cmine;
+	private CMineOld cmine;
 
-	public CMineCommand(CMine cmine, String name) {
-		CMineParser.checkAlphabeticName(name);
+	public CMineCommandOld(CMineOld cmine, String name) {
+		CMineParserOld.checkAlphabeticName(name);
 		setName(name);
 		this.cmine = cmine;
 	}
@@ -35,6 +36,7 @@ public class CMineCommand {
 	 * @return
 	 */
 	public AMIPluginOption getOrCreatePluginOption() {
+// typically		new org.xmlcml.ami2.plugins.species.SpeciesPluginOption();
 		String pluginClassName = this.getClass().getPackage().getName()+"."+name+"."+Util.capitalise(name)+"PluginOption";
 		try {
 			Class<? extends Object> pluginClass = Class.forName(pluginClassName);

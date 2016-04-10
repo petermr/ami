@@ -3,6 +3,7 @@ package org.xmlcml.ami2.plugins;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -35,27 +36,27 @@ public class CommandParserTest {
 
 	@Test
 	public void testCommandLineSyntax() throws IOException {
-		CMine cmine = new CMineParser().parseArgs(TEST1);
+		CMineOld cmine = new CMineParserOld().parseArgs(TEST1);
 		Assert.assertEquals("Cmine: fooDir; ["
-				+ "arg: --bar: [b1, b2], "
-				+ "arg: --foo: [f1], "
-				+ "arg: --baz: [], "
-				+ "arg: --plugh: [p]"
+				+ "--bar [b1, b2], "
+				+ "--foo [f1], "
+				+ "--baz [], "
+				+ "--plugh [p]"
 				+ "];"
 				+ " ["
 				+ "{norma: option: (opt: nlm2html; [])}, "
 				+ "{search: option: (opt: inn; [])}, "
-				+ "{word: option: (opt: frequencies; [arg: --stopword: [pmctxt.txt]])}"
+				+ "{word: option: (opt: frequencies; [--stopword [pmctxt.txt]])}"
 				+ "]", cmine.toString());
 	}
 	
 	@Test 
 	public void testArguments() {
-		CMine cmine = new CMineParser().parseArgs(TEST1);
+		CMineOld cmine = new CMineParserOld().parseArgs(TEST1);
 		List<Argument> argumentList = cmine.getArgumentList();
 		Assert.assertEquals(4,  argumentList.size());
 		Argument argument0 = argumentList.get(0);
-		Assert.assertEquals("arg: --bar: [b1, b2]", argument0.toString());
+		Assert.assertEquals("--bar [b1, b2]", argument0.toString());
 		Assert.assertEquals("--bar", argument0.getName());
 		List<String> argValues0 = argument0.getValues();
 		Assert.assertEquals(2,  argValues0.size());
@@ -66,10 +67,10 @@ public class CommandParserTest {
 	
 	@Test 
 	public void testEmptyArguments() {
-		CMine cmine = new CMineParser().parseArgs(TEST1);
+		CMineOld cmine = new CMineParserOld().parseArgs(TEST1);
 		List<Argument> argumentList = cmine.getArgumentList();
 		Argument argument2 = argumentList.get(2);
-		Assert.assertEquals("arg: --baz: []", argument2.toString());
+		Assert.assertEquals("--baz []", argument2.toString());
 		Assert.assertEquals("--baz", argument2.getName());
 		List<String> argValues2 = argument2.getValues();
 		Assert.assertEquals(0,  argValues2.size());
@@ -77,29 +78,29 @@ public class CommandParserTest {
 	
 	@Test 
 	public void testGetArgumentsByName() {
-		CMine cmine = new CMineParser().parseArgs(TEST1);
+		CMineOld cmine = new CMineParserOld().parseArgs(TEST1);
 		Argument bar = cmine.getArgumentByName("--bar");
 		Assert.assertNotNull(bar);
-		Assert.assertEquals("arg: --bar: [b1, b2]", bar.toString());;
+		Assert.assertEquals("--bar [b1, b2]", bar.toString());;
 		bar = cmine.getArgumentByName("-bar");
 		Assert.assertNull(bar);
 	}
 	
 	@Test 
 	public void testCommands() {
-		CMine cmine = new CMineParser().parseArgs(TEST1);
-		List<CMineCommand> commandList = cmine.getCommandList();
+		CMineOld cmine = new CMineParserOld().parseArgs(TEST1);
+		List<CMineCommandOld> commandList = cmine.getCommandList();
 		Assert.assertEquals(3,  commandList.size());
-		CMineCommand command0 = commandList.get(0);
+		CMineCommandOld command0 = commandList.get(0);
 		Assert.assertEquals("{norma: option: (opt: nlm2html; [])}", command0.toString());
 		Assert.assertEquals(command0.getName(), "norma");
 	}
 	
 	@Test 
 	public void testOptions() {
-		CMine cmine = new CMineParser().parseArgs(TEST1);
-		List<CMineCommand> commandList = cmine.getCommandList();
-		CMineCommand command0 = commandList.get(0);
+		CMineOld cmine = new CMineParserOld().parseArgs(TEST1);
+		List<CMineCommandOld> commandList = cmine.getCommandList();
+		CMineCommandOld command0 = commandList.get(0);
 		CommandOption option = command0.getOption();
 		Assert.assertEquals("(opt: nlm2html; [])", option.toString());
 		Assert.assertNotNull(option);
@@ -108,16 +109,16 @@ public class CommandParserTest {
 	
 	@Test 
 	public void testGetCommandByName() {
-		CMine cmine = new CMineParser().parseArgs(TEST1);
-		CMineCommand command = cmine.getCommandByName("norma");
+		CMineOld cmine = new CMineParserOld().parseArgs(TEST1);
+		CMineCommandOld command = cmine.getCommandByName("norma");
 		Assert.assertNotNull(command);
 		Assert.assertEquals("{norma: option: (opt: nlm2html; [])}", command.toString());
 	}
 	
 	@Test 
 	public void testGetOptionByName() {
-		CMine cmine = new CMineParser().parseArgs(TEST1);
-		CMineCommand command = cmine.getCommandByName("norma");
+		CMineOld cmine = new CMineParserOld().parseArgs(TEST1);
+		CMineCommandOld command = cmine.getCommandByName("norma");
 		CommandOption option = command.getOptionByName("nlm2html");
 		Assert.assertNotNull(command);
 		Assert.assertEquals("{norma: option: (opt: nlm2html; [])}", command.toString());
@@ -125,8 +126,8 @@ public class CommandParserTest {
 	
 	@Test 
 	public void testGetOptionArgumentsByName() {
-		CMine cmine = new CMineParser().parseArgs(TEST1);
-		CMineCommand command = cmine.getCommandByName("word");
+		CMineOld cmine = new CMineParserOld().parseArgs(TEST1);
+		CMineCommandOld command = cmine.getCommandByName("word");
 		CommandOption option = command.getOptionByName("frequencies");
 		Argument argument = option.getArgumentByName("--stopword");
 		Assert.assertNotNull(argument);
@@ -135,13 +136,13 @@ public class CommandParserTest {
 	
 	@Test 
 	public void testCommandOptionArguments() {
-		CMine cmine = new CMineParser().parseArgs(TEST1);
-		List<CMineCommand> commandList = cmine.getCommandList();
-		CMineCommand command0 = commandList.get(0);
+		CMineOld cmine = new CMineParserOld().parseArgs(TEST1);
+		List<CMineCommandOld> commandList = cmine.getCommandList();
+		CMineCommandOld command0 = commandList.get(0);
 		CommandOption option = command0.getOption();
 		List<Argument> arguments0 = option.getArgumentList();
 		Assert.assertEquals(0,  arguments0.size());
-		CMineCommand command2 = commandList.get(2);
+		CMineCommandOld command2 = commandList.get(2);
 		CommandOption option2 = command2.getOption();
 		List<Argument> arguments2 = option2.getArgumentList();
 		Assert.assertEquals(1,  arguments2.size());
@@ -156,7 +157,7 @@ public class CommandParserTest {
 	
 	@Test
 	public void testBadSyntax() throws IOException {
-		CMineParser commandParser = new CMineParser();
+		CMineParserOld commandParser = new CMineParserOld();
 		String args = "fooDir badarg \n";
 		try {
 			commandParser.parseArgs(args);
@@ -168,7 +169,7 @@ public class CommandParserTest {
 	
 	@Test
 	public void testBadSyntax1() throws IOException {
-		CMineParser commandParser = new CMineParser();
+		CMineParserOld commandParser = new CMineParserOld();
 		String args = "fooDir _ snork foo badopt \n";
 		try {
 			commandParser.parseArgs(args);
@@ -180,7 +181,7 @@ public class CommandParserTest {
 	
 	@Test
 	public void testOptionless() throws IOException {
-		CMineParser commandParser = new CMineParser();
+		CMineParserOld commandParser = new CMineParserOld();
 		String args = "fooDir _ snork foo _ barf _ plugh zzz \n";
 		commandParser.parseArgs(args);
 	}
@@ -203,21 +204,26 @@ public class CommandParserTest {
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
 		String cmd = ""
 				+ projectDir
-				+ " _ search tropicalVirus"
-				+ " _ species binomial"
-				+ " _ search inn"
+//				+ " _ search tropicalVirus"
+//				+ " _ species binomial"
+//				+ " _ search inn"
+				+ " _ gene human"
+				+ " _ summary datatables --filter snippets"
 //				+ " search(disease)"
 	    ;
 		String[] args = cmd.split("\\s+");
-		CMineParser.main(args);
+		LOG.debug("CMD OLD "+Arrays.asList(args));
+		CMineParserOld.main(args);
 		CProject cproject = new CProject(projectDir);
 		CTreeList cTreeList = cproject.getCTreeList();
+		LOG.debug("testCommandLineSearch");
 		Assert.assertNotNull("cTreeList not null", cTreeList);
 		Assert.assertEquals("cTree count", 9, cTreeList.size());
 		PluginOption pluginOption = new AMIPluginOption("search", "disease");
 		PluginSnippetsTree pluginSnippetsTree = cproject.getOrCreateCurrentPluginSnippetsTree();
 		Assert.assertNotNull("pluginSnippetsTree not null", pluginSnippetsTree);
 		List<SnippetsTree> snippetsTreeList = pluginSnippetsTree.getOrCreateSnippetsTreeList();
+		LOG.debug("SL"+snippetsTreeList);
 //		Assert.assertEquals(10, snippetsTreeList.size());
 	}
 
@@ -233,7 +239,7 @@ public class CommandParserTest {
 		+ " _ gene human "
 		+ " _ search tropicalVirus"
 	    ;
-		CMineParser.main((projectDir+" "+cmd).split("\\s+"));
+		CMineParserOld.main((projectDir+" "+cmd).split("\\s+"));
 	}
 
 	@Test
@@ -244,7 +250,7 @@ public class CommandParserTest {
 		File projectDir = new File("target/tutorial/"+project);
 		File rawDir = new File(AMIFixtures.TEST_AMI_DIR, project);
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
-		CMineParser.main(new String[]{projectDir.toString()});
+		CMineParserOld.main(new String[]{projectDir.toString()});
 	}
 
 	@Test
@@ -265,7 +271,7 @@ public class CommandParserTest {
 		+ " _ summary datatables --filter snippets "
 //		+ " _ summary frequencies"
 	    ;
-		CMine cmine = new CMineParser().parseArgs(cmd);
+		CMineOld cmine = new CMineParserOld().parseArgs(cmd);
 		cmine.runCommands();
 		// analysis
 		CProject cproject = new CProject(projectDir);
@@ -300,22 +306,29 @@ public class CommandParserTest {
 	}
 
 	@Test
+	@Ignore // large
 	public void testDataTables() throws IOException {
-		String project = "zika10old";
+//		String project = "cattlelame";
+		String project = "cattlelame";
 		File projectDir = new File("target/tutorial/"+project);
 //		File rawDir = new File(AMIFixtures.TEST_AMI_DIR, project);
-		File rawDir = new File(AMIFixtures.TEST_AMI_DIR, project);
+//		File rawDir = new File(AMIFixtures.TEST_AMI_DIR, project);
+		File rawDir = new File("../../workspace", project);
 		CMineTestFixtures.cleanAndCopyDir(rawDir, projectDir);
 		//
 		String cmd = ""+projectDir
-		+ " _ gene human "
-		+ " _ search tropicalVirus --dictionary org/xmlcml/ami2/plugins/dictionary/tropicalVirus.xml"
+				+ " _ word frequencies --w.stopwords pmcstop.txt stopwords.txt --minfreq 20"
+//				+ " _ sequence dnaprimer"
+				+ " _ species binomial"
+				+ " _ gene human "
+				+ " _ search disease --dictionary org/xmlcml/ami2/plugins/dictionary/disease.xml"
+//		+ " _ search tropicalVirus --dictionary org/xmlcml/ami2/plugins/dictionary/tropicalVirus.xml"
 //		+ " _ summary datatables --filter file **/summary/**/snippets.xml xpath //result"
 		+ " _ summary datatables --filter snippets "
 //		+ " _ summary datatables --filter **/snippets.xml "
 //		+ " _ summary frequencies"
 	    ;
-		CMine cmine = new CMineParser().parseArgs(cmd);
+		CMineOld cmine = new CMineParserOld().parseArgs(cmd);
 		cmine.runCommands();
 		
 		CProject cproject = new CProject(projectDir);
@@ -331,7 +344,7 @@ public class CommandParserTest {
 		String cmd = ""+projectDir
 		+ " _ gene human "
 	    ;
-		CMine cmine = new CMineParser().parseArgs(cmd);
+		CMineOld cmine = new CMineParserOld().parseArgs(cmd);
 		CProject cproject = new CProject(projectDir);
 		
 		cmine.runCommands();
@@ -349,8 +362,8 @@ public class CommandParserTest {
 		+ " _ gene human "
 		+ " _ search tropicalVirus --dictionary org/xmlcml/ami2/plugins/dictionary/tropicalVirus.xml"
 	    ;
-		CMine cmine = new CMineParser().parseArgs(cmd);
-		CMineCommand command = cmine.getCommandByName("_word");
+		CMineOld cmine = new CMineParserOld().parseArgs(cmd);
+		CMineCommandOld command = cmine.getCommandByName("_word");
 		CommandOption option = command.getOptionByName("frequencies");
 		Argument argument = option.getArgumentByName("--xpath");
 		cmine.runCommands();
@@ -369,7 +382,7 @@ public class CommandParserTest {
 		+ " sequence(dnaprimer)"
 		+ " gene(human) "
 	    ;
-		CMineParser.main((projectDir+" "+cmd).split("\\s+"));
+		CMineParserOld.main((projectDir+" "+cmd).split("\\s+"));
 	}
 
 }

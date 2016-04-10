@@ -21,6 +21,7 @@ import org.xmlcml.cmine.files.OptionFlag;
 import org.xmlcml.cmine.files.PluginOption;
 import org.xmlcml.cmine.util.CellRenderer;
 
+@Deprecated
 public class AMIPluginOption extends PluginOption {
 
 	private static final Logger LOG = Logger.getLogger(AMIPluginOption.class);
@@ -34,7 +35,8 @@ public class AMIPluginOption extends PluginOption {
 	public final static String WIKIPEDIA_HREF1 = "";
 	protected List<Argument> argumentList;
 
-	private CMineCommand cMineCommand;
+	private CMineCommandOld cMineCommand;
+	private EmmaElement emmaCommand;
 	
 	protected AMIPluginOption(String pluginName) {
 		this.pluginName = pluginName;
@@ -139,7 +141,7 @@ public class AMIPluginOption extends PluginOption {
 		LOG.trace("projDIR "+projectDir);
 		String filterCommandString = createFilterCommandString(optionName);
 		DefaultArgProcessor argProcessor = new DefaultArgProcessor(filterCommandString);
-		LOG.debug("filter "+filterCommandString);
+		LOG.trace("filter "+filterCommandString);
 		argProcessor.getCProject().setDirectory(projectDir);
 		argProcessor.runAndOutput();
 		return;
@@ -219,7 +221,7 @@ public class AMIPluginOption extends PluginOption {
 		String countFilename = createCountFilename(option);
 		String documentCountFilename = createDocumentCountFilename(option);
 		
-		LOG.debug("Summary: "+countFilename+" / "+documentCountFilename);
+		LOG.trace("Summary: "+countFilename+" / "+documentCountFilename);
 		String cmd = "--project "+projectDir
 				+ " -i "+ snippetsFilename
 				+ " --xpath //result"+xpath
@@ -253,13 +255,13 @@ public class AMIPluginOption extends PluginOption {
 
 	protected String createCountFilename(String option) {
 		String name = getSnippetsName()+"/"+CProject.COUNT_XML;
-		LOG.debug("Counts "+name);
+		LOG.trace("Counts "+name);
 		return name;
 	}
 	
 	protected String createDocumentCountFilename(String option) {
 		String name = getSnippetsName()+"/"+CProject.DOCUMENTS_XML;
-		LOG.debug("Documents "+name);
+		LOG.trace("Documents "+name);
 		return name;
 	}
 	
@@ -316,7 +318,8 @@ public class AMIPluginOption extends PluginOption {
 		return cmd;
 	}
 
-	public void setCMineCommand(CMineCommand cMineCommand) {
+	@Deprecated
+	public void setCMineCommand(CMineCommandOld cMineCommand) {
 		this.cMineCommand = cMineCommand;
 		this.setPluginName(cMineCommand.getName());
 		this.setOptionName(cMineCommand.getOptionName()); // this is obsolete but necessary

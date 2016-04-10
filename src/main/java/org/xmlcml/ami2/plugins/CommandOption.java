@@ -9,13 +9,14 @@ import java.util.List;
  *
  *  // COLLAPSE this into arguments
  */
+@Deprecated
 public class CommandOption {
 
 	private String name;
 	private List<Argument> argumentList;
 
 	public CommandOption(String name) {
-		CMineParser.checkAlphabeticName(name);
+		CMineParserOld.checkAlphabeticName(name);
 		this.name = name;
 		this.argumentList = new ArrayList<Argument>();
 	}

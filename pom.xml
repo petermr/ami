@@ -81,8 +81,13 @@
 
 					<programs>
  						<program>
-							<mainClass>org.xmlcml.ami2.plugins.CommandProcessor</mainClass>
+<!-- 							<mainClass>org.xmlcml.ami2.plugins.CommandProcessor</mainClass> -->
+							<mainClass>org.xmlcml.ami2.plugins.CMine</mainClass>
 							<id>cmine</id>
+						</program>
+ 						<program>
+							<mainClass>org.xmlcml.ami2.plugins.Emma</mainClass>
+							<id>emma</id>
 						</program>
  						<program>
 							<mainClass>org.xmlcml.ami2.plugins.gene.GenePlugin</mainClass>

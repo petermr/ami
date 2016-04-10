@@ -15,21 +15,20 @@ import org.apache.log4j.Logger;
  * @author pm286
  *
  */
-public class CMineParser {
+public class EmmaParser {
 
-	private static final Logger LOG = Logger.getLogger(CMineParser.class);
+	private static final Logger LOG = Logger.getLogger(EmmaParser.class);
 	static {
 		LOG.setLevel(Level.DEBUG);
 	}
 
 	public static final String ARGUMENT_PREFIX = "-";
-	public static final String COMMAND_SEPARATOR = "_";
+	public static final String COMMAND_SEPARATOR = "-c";
 	
-	private List<Argument> argumentList;
-	private CMine cmine;
 	private Queue<String> argQueue;
+	private EmmaElement emmaElement;
 	
-	CMineParser() {
+	EmmaParser() {
 		init();
 	}
 
@@ -37,32 +36,31 @@ public class CMineParser {
 		argQueue = new LinkedList<String>();
 	}
 
-	public CMine parseArgs(String args) {
-		List<String> argList = Arrays.asList(args.split("\\s+"));
+	public EmmaElement parseArgs(String args) {
+		List<String> argList = args == null ? new ArrayList<String>() : Arrays.asList(args.trim().split("\\s+"));
 		return parseArgs(argList);
 	}
 
-	private CMine parseArgs(List<String> argList) {
-		cmine = new CMine();
+	public EmmaElement parseArgs(String[] args) {
+		return parseArgs(Arrays.asList(args));
+	}
+
+	EmmaElement parseArgs(List<String> argList) {
+		emmaElement = new EmmaElement();
 		this.argQueue.addAll(argList);
 		parseArgs();
-		return cmine;
+		return emmaElement;
 	}
 
 	void parseArgs() {
-		LOG.trace(argQueue);
 		if (argQueue.isEmpty()) {
 			throw new RuntimeException("No args given");
 		}
-		cmine = new CMine();
-		String token = argQueue.remove();
-		cmine.setProjectDirName(token);
-		readArguments();
-		cmine.setArgumentList(argumentList);
+		List<Argument> argumentList = readArguments();
+		emmaElement.setArgumentList(argumentList);
 		if (!argQueue.isEmpty()) {
 			readCommands();
 		}
-		LOG.trace("CM: "+cmine);
 	}
 
 	private void readCommands() {
@@ -70,97 +68,67 @@ public class CMineParser {
 			String token = argQueue.peek();
 			if (token.equals(COMMAND_SEPARATOR)) {
 				argQueue.poll();
-				CMineCommand command = readCommand();
-				cmine.add(command);
-				LOG.debug(command);
+				AbstractEmmaElement command = readCommand();
+				emmaElement.appendChild(command);
 			} else {
 				throw new RuntimeException("Unexpected token; expecting command or EOI: "+token);
 			}
 		}
 	}
 
-	private CMineCommand readCommand() {
-		CMineCommand command = new CMineCommand(cmine, argQueue.remove());
-		if (!COMMAND_SEPARATOR.equals(argQueue.peek())) {
-			CommandOption option = readOption();
-			if (option != null) {
-				command.setOption(option);
-			}
-		}
-		return command;
+	private AbstractEmmaElement readCommand() {
+		AbstractEmmaElement commandElement = new CommandElement(argQueue.remove());
+		List<Argument> argumentList = readArguments();
+		commandElement.setArgumentList(argumentList);
+		return commandElement;
 	}
 
 	private List<Argument> readArguments() {
-		argumentList = new ArrayList<Argument>();
+		List<Argument> argumentList = new ArrayList<Argument>();
 		while (!argQueue.isEmpty()) {
-			readAndAddArgument();
-			String token = argQueue.peek();
-			if (token == null || !token.startsWith(ARGUMENT_PREFIX)) {
-				break; 
+			Argument argument = readArgument();
+			if (argument == null) {
+				break;
 			}
+			argumentList.add(argument);
 		}
 		return argumentList;
 	}
-	private void readAndAddArgument() {
+	private Argument readArgument() {
 		String token = argQueue.peek();
 		if (!token.startsWith(ARGUMENT_PREFIX)) {
-			return;
+			return null;
 		}
 		if (token.equals(ARGUMENT_PREFIX)) {
 			throw new RuntimeException("Argument "+ARGUMENT_PREFIX+" not yet supported");
+		}
+		if (token.equals(COMMAND_SEPARATOR)) {
+			return null;
 		}
 		Argument argument = new Argument(token);
 		argQueue.remove();
 		while(!argQueue.isEmpty()) {
 			token = argQueue.peek();
-			if (token.equals(COMMAND_SEPARATOR) || token.startsWith(ARGUMENT_PREFIX)) {
+			if (token == null || token.startsWith(ARGUMENT_PREFIX)) {
 				break; 
 			}
 			argument.add(argQueue.remove());
 		}
-		argumentList.add(argument);
 		LOG.trace("read argument: "+argument);
+		return argument;
 	}
 	
-	private CommandOption readOption() {
-		String token = argQueue.remove();
-		LOG.debug("option: "+token);
-		CommandOption option = new CommandOption(token);
-		while (!argQueue.isEmpty()) {
-			token = argQueue.peek();
-			if (token.equals(COMMAND_SEPARATOR)) {
-				break;
-			} else if (token.startsWith(ARGUMENT_PREFIX)) {
-				readArguments();
-				option.setArgumentList(argumentList);
-				break;
-			} else {
-				throw new RuntimeException("Currently only one Option allowed for each Command: "+token);
-			}
-		}
-		return option;
-	}
-
-	public List<Argument> getArgumentList() {
-		return argumentList;
-	}
-
-
-	private static void help() {
+	static void help() {
 		System.err.println("Command processor: \n"
 				+ "   cmine projectDir [command [command]...]");
 	}
 
-	public CMine getCMine() {
-		return cmine;
-	}
-
 	public static void main(String[] args) throws IOException {
-		CMineParser commandProcessor = new CMineParser();
+		EmmaParser parser = new EmmaParser();
 		if (args.length == 0) {
 			help();
 		} else {
-			commandProcessor.parseArgs(Arrays.asList(args));
+			EmmaElement emmaElement = parser.parseArgs(Arrays.asList(args));
 		}
 	}
 

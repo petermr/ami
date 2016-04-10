@@ -41,7 +41,7 @@ public class XPathTest {
 		String cmd = ""+projectDir
 		+ " _ species binomial"
 	    ;
-		CMine cmine = new CMineParser().parseArgs(cmd);
+		CMineOld cmine = new CMineParserOld().parseArgs(cmd);
 		cmine.runCommands();
 		CProject cproject = new CProject(projectDir);
 		CTreeList cTreeList = cproject.getCTreeList();

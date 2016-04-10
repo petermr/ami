@@ -274,7 +274,7 @@ public class ResultsAnalysis implements CellCalculator {
 	public HtmlTable makeHtmlDataTable() {
 		ensurePluginSnippetsTreeByPluginOptionName();
 		Set<String> set = this.pluginSnippetsTreeByPluginOption.keySet();
-		LOG.debug("HTML"+set+" | "+pluginSnippetsTreeByPluginOption.size());
+		LOG.trace("HTML"+set+" | "+pluginSnippetsTreeByPluginOption.size());
 		pluginOptionNameList = Arrays.asList(set.toArray(new String[0]));
 		Collections.sort(this.pluginOptionNameList);
 		

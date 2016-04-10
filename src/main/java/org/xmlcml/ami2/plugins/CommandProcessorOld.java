@@ -67,7 +67,7 @@ public class CommandProcessorOld {
 		}
 		for (int i = 0; i < cmds.size(); i++) {
 			String cmd = cmds.get(i);
-			LOG.debug("creating pluginOption: "+cmd);
+			LOG.trace("creating pluginOption: "+cmd);
 			AMIPluginOption pluginOption = AMIPluginOption.createPluginOption(cmd);
 			if (pluginOption == null) {
 				LOG.error("skipping unknown command: "+cmd);
@@ -77,12 +77,12 @@ public class CommandProcessorOld {
 				pluginOptions.add(pluginOption);
 			}
 		}
-		LOG.debug(pluginOptions);
+		LOG.trace(pluginOptions);
 	}
 	
 	public void runCommands() {
 		runNormaIfNecessary();
-		LOG.debug("PDIR "+projectDir);
+		LOG.trace("PDIR "+projectDir);
 		for (AMIPluginOption pluginOption : pluginOptions) {
 			pluginOption.setProjectDir(projectDir);
 			System.out.println("running: "+pluginOption);
@@ -149,10 +149,10 @@ public class CommandProcessorOld {
 			HtmlTable table = resultsAnalysis.makeHtmlDataTable();
 			HtmlHtml html = dataTablesTool.createHtmlWithDataTable(table);
 			File outfile = new File(projectDir, cellType.toString()+"."+CProject.DATA_TABLES_HTML);
-			LOG.debug("writing: "+outfile);
+			LOG.trace("writing: "+outfile);
 			XMLUtil.debug(html, outfile, 1);
 		}
-		LOG.debug(dataTablesTool.cellRendererList);
+		LOG.trace(dataTablesTool.cellRendererList);
 		List<HtmlTd> footerList = new ArrayList<HtmlTd>();
 		for (CellRenderer cellRenderer : dataTablesTool.cellRendererList) {
 			HtmlTd td = new HtmlTd();
@@ -183,7 +183,7 @@ public class CommandProcessorOld {
 			// remove projectDir
 			commands.remove(0);
 		}
-		LOG.debug(commands);
+		LOG.trace(commands);
 		processCommands(commands);
 		createDataTables();
 	}

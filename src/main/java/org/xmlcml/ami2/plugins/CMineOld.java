@@ -21,25 +21,26 @@ import org.xmlcml.norma.Norma;
 import org.xmlcml.norma.biblio.json.EPMCConverter;
 import org.xmlcml.xml.XMLUtil;
 
-public class CMine {
+@Deprecated
+public class CMineOld {
 
-	private static final Logger LOG = Logger.getLogger(CMine.class);
+	private static final Logger LOG = Logger.getLogger(CMineOld.class);
 
 	static {
 		LOG.setLevel(Level.DEBUG);
 	}
 	
-	private List<CMineCommand> commandList;
+	private List<CMineCommandOld> commandList;
 	private String projectDirName;
 	private List<Argument> argumentList;
 	private File projectDir;
 	private List<AMIPluginOption> pluginOptions;
 
-	public CMine() {
-		commandList = new ArrayList<CMineCommand>();
+	public CMineOld() {
+		commandList = new ArrayList<CMineCommandOld>();
 		
 	}
-	public List<CMineCommand> getCommandList() {
+	public List<CMineCommandOld> getCommandList() {
 		return commandList;
 	}
 	public void setProjectDirName(String filename) {
@@ -50,7 +51,7 @@ public class CMine {
 		this.argumentList = argumentList;
 	}
 
-	public void add(CMineCommand command) {
+	public void add(CMineCommandOld command) {
 		commandList.add(command);
 	}
 	public String toString() {
@@ -86,9 +87,9 @@ public class CMine {
 
 	private List<AMIPluginOption> getOrCreatePluginOptions() {
 		if (pluginOptions == null) {
-			List<CMineCommand> commands = this.getCommandList();
+			List<CMineCommandOld> commands = this.getCommandList();
 			pluginOptions = new ArrayList<AMIPluginOption>();
-			for (CMineCommand command : commands) {
+			for (CMineCommandOld command : commands) {
 				AMIPluginOption pluginOption = command.getOrCreatePluginOption();
 				pluginOptions.add(pluginOption);
 			}
@@ -174,9 +175,9 @@ public class CMine {
 	 * @param name of command (includes leading "_")
 	 * @return null if name is null or 
 	 */
-	public CMineCommand getCommandByName(String name) {
+	public CMineCommandOld getCommandByName(String name) {
 		if (name != null && commandList != null) {
-			for (CMineCommand command : commandList) {
+			for (CMineCommandOld command : commandList) {
 				if (name.equals(command.getName())) {
 					return command;
 				}
@@ -187,6 +188,11 @@ public class CMine {
 
 	public File getProjectDir() {
 		return projectDir;
+	}
+
+	public static void main(String[] args) {
+		CMineOld cmine = new CMineParserOld().parseArgs(args);
+		cmine.runCommands();
 	}
 
 

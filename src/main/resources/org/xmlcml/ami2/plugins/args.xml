@@ -1,6 +1,7 @@
-<argList name="ami" version="0.3.0">
+<argList name="ami" version="0.3.1">
 
-  <p>201604=06 Refactoring parsing, split from running</p>
+  <p>201604-10 Created Emma* for parsing and running</p>
+  <p>201604-06 Refactoring parsing, split from running</p>
   
   <p>201603-29 separated search from word statistics (some bugs might remain)</p>
   <p>201603-20 minor fixes following norma sections</p>

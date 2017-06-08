@@ -1,15 +1,11 @@
 package org.xmlcml.ami2.plugins.dummy;
 
-import java.util.List;
-
-import nu.xom.Element;
-
 import org.apache.log4j.Level;
 import org.xmlcml.ami2.plugins.AMIArgProcessor;
 import org.xmlcml.ami2.plugins.AMISearcher;
 import org.xmlcml.ami2.plugins.NamedPattern;
-import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+
+import nu.xom.Element;
 
 public class DummySearcher extends AMISearcher {
 

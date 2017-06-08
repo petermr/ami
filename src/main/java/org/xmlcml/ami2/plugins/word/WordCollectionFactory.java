@@ -11,11 +11,11 @@ import org.apache.log4j.Logger;
 import org.xmlcml.ami2.plugins.AMIArgProcessor;
 import org.xmlcml.ami2.wordutil.LuceneUtils;
 import org.xmlcml.ami2.wordutil.WordSetWrapper;
-import org.xmlcml.cmine.args.DefaultArgProcessor;
-import org.xmlcml.cmine.files.CTree;
-import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
-import org.xmlcml.cmine.files.ResultsElementList;
+import org.xmlcml.cproject.args.DefaultArgProcessor;
+import org.xmlcml.cproject.files.CTree;
+import org.xmlcml.cproject.files.ResultElement;
+import org.xmlcml.cproject.files.ResultsElement;
+import org.xmlcml.cproject.files.ResultsElementList;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.ImmutableSortedMultiset;

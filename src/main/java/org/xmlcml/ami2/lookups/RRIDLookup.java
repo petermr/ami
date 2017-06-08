@@ -1,14 +1,10 @@
 package org.xmlcml.ami2.lookups;
 
 import java.io.IOException;
-import java.net.URL;
-import java.text.Normalizer.Form;
-import java.util.List;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.apache.xml.serialize.OutputFormat;
-import org.xmlcml.cmine.lookup.AbstractLookup;
+import org.xmlcml.cproject.lookup.AbstractLookup;
 
 public class RRIDLookup extends AbstractLookup {
 

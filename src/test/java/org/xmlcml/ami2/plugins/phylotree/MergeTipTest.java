@@ -9,18 +9,18 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import nu.xom.Element;
-
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.vafer.jdeb.shaded.compress.io.FileUtils;
 import org.xmlcml.ami2.AMIFixtures;
 import org.xmlcml.ami2.lookups.ENALookup;
 import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlNEXML;
 import org.xmlcml.xml.XMLUtil;
+
+import nu.xom.Element;
 
 //@Ignore("problematic in Jenkins; uncomment for testing")
 public class MergeTipTest {

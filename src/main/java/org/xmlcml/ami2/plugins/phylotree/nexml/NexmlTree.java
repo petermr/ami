@@ -7,11 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import nu.xom.Attribute;
-import nu.xom.Element;
-
 import org.apache.log4j.Logger;
-import org.xmlcml.cmine.args.DefaultArgProcessor;
+import org.xmlcml.cproject.args.DefaultArgProcessor;
 import org.xmlcml.euclid.Int2;
 import org.xmlcml.graphics.svg.SVGElement;
 import org.xmlcml.graphics.svg.SVGG;
@@ -19,6 +16,9 @@ import org.xmlcml.xml.XMLUtil;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+
+import nu.xom.Attribute;
+import nu.xom.Element;
 
 public class NexmlTree extends NexmlElement {
 

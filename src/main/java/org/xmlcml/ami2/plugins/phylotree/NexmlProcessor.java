@@ -13,8 +13,6 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
-import nu.xom.Attribute;
-
 import org.apache.commons.io.FileUtils;
 import org.xmlcml.ami2.lookups.TaxdumpLookup;
 import org.xmlcml.ami2.plugins.phylotree.PhyloTreeArgProcessor.Message;
@@ -25,7 +23,7 @@ import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlNode;
 import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlOtu;
 import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlOtus;
 import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlTree;
-import org.xmlcml.cmine.args.log.AbstractLogElement.LogLevel;
+import org.xmlcml.cproject.args.log.AbstractLogElement.LogLevel;
 import org.xmlcml.diagrams.DiagramTree;
 import org.xmlcml.diagrams.phylo.PhyloTreePixelAnalyzer;
 import org.xmlcml.euclid.Real2;
@@ -41,6 +39,8 @@ import org.xmlcml.norma.editor.Extraction;
 import org.xmlcml.norma.editor.SubstitutionEditor;
 import org.xmlcml.norma.image.ocr.HOCRReader;
 import org.xmlcml.xml.XMLUtil;
+
+import nu.xom.Attribute;
 
 public class NexmlProcessor {
 
@@ -78,7 +78,7 @@ public class NexmlProcessor {
 			PixelNode rootPixelNode = diagramTree.getRootPixelNode();
 			PixelGraph graph = diagramTree.getGraph();
 			// use root node later...
-			graph.tidyNodesAndEdges(5.0);
+			graph.tidyNodesAndEdges(5);
 			diagramTree = new PhyloTreePixelAnalyzer().createFromGraph(graph, rootPixelNode);
 			NexmlFactory nexmlFactory = new NexmlFactory(argProcessor);
 			nexmlFactory.setRootPixelNode(rootPixelNode);

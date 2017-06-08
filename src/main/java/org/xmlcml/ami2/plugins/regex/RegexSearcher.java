@@ -2,15 +2,14 @@ package org.xmlcml.ami2.plugins.regex;
 
 import java.util.List;
 
-import nu.xom.Element;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.xmlcml.ami2.plugins.AMIArgProcessor;
 import org.xmlcml.ami2.plugins.AMISearcher;
 import org.xmlcml.ami2.plugins.MatcherResult;
-import org.xmlcml.cmine.files.ResultElement;
-import org.xmlcml.cmine.files.ResultsElement;
+import org.xmlcml.cproject.files.ResultsElement;
+
+import nu.xom.Element;
 
 public class RegexSearcher extends AMISearcher {
 

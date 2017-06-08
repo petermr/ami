@@ -16,7 +16,7 @@ import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlElement;
 import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlNEXML;
 import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlOtu;
 import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlOtus;
-import org.xmlcml.cmine.util.CMineUtil;
+import org.xmlcml.cproject.util.CMineUtil;
 
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Lists;

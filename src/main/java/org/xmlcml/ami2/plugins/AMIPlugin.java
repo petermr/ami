@@ -2,12 +2,11 @@ package org.xmlcml.ami2.plugins;
 
 import java.util.Arrays;
 import java.util.HashMap;
-
 import java.util.Map;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.xmlcml.cmine.args.DefaultArgProcessor;
+import org.xmlcml.cproject.args.DefaultArgProcessor;
 
 public class AMIPlugin {
 

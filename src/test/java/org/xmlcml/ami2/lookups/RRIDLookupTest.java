@@ -2,15 +2,12 @@ package org.xmlcml.ami2.lookups;
 
 import java.io.IOException;
 
-import nu.xom.Element;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.xmlcml.cmine.lookup.AbstractLookup;
-import org.xmlcml.xml.XMLUtil;
+import org.xmlcml.cproject.lookup.AbstractLookup;
 
 public class RRIDLookupTest {
 

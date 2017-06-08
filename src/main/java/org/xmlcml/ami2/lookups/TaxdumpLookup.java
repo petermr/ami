@@ -9,15 +9,15 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.vafer.jdeb.shaded.compress.io.FileUtils;
-import org.xmlcml.cmine.lookup.AbstractLookup;
-
-import blogspot.software_and_algorithms.stern_library.string.DamerauLevenshteinAlgorithm;
+import org.xmlcml.cproject.lookup.AbstractLookup;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+
+import blogspot.software_and_algorithms.stern_library.string.DamerauLevenshteinAlgorithm;
 
 /** looks up species and genus against NCBI Taxdump.
  * 

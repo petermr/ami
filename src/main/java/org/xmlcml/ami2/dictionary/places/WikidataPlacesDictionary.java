@@ -1,14 +1,9 @@
 package org.xmlcml.ami2.dictionary.places;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.vafer.jdeb.shaded.compress.io.FileUtils;
 import org.xmlcml.ami2.dictionary.DefaultAMIDictionary;
 import org.xmlcml.xml.XMLUtil;
 

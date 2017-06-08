@@ -15,17 +15,27 @@ import org.xmlcml.ami2.plugins.regex.CompoundRegexList;
 import org.xmlcml.ami2.plugins.regex.RegexComponent;
 import org.xmlcml.ami2.plugins.word.WordCollectionFactory;
 import org.xmlcml.ami2.wordutil.WordSetWrapper;
-import org.xmlcml.cmine.args.ArgIterator;
-import org.xmlcml.cmine.args.ArgumentOption;
-import org.xmlcml.cmine.args.DefaultArgProcessor;
-import org.xmlcml.cmine.args.ValueElement;
-import org.xmlcml.cmine.args.VersionManager;
-import org.xmlcml.cmine.files.CTree;
-import org.xmlcml.cmine.files.ContentProcessor;
-import org.xmlcml.cmine.files.ResourceLocation;
-import org.xmlcml.cmine.files.ResultsElement;
-import org.xmlcml.cmine.lookup.DefaultStringDictionary;
-import org.xmlcml.cmine.lookup.AbstractLookup;
+import org.xmlcml.cproject.CProjectArgProcessor;
+import org.xmlcml.cproject.args.ArgIterator;
+import org.xmlcml.cproject.args.ArgumentOption;
+import org.xmlcml.cproject.args.ValueElement;
+import org.xmlcml.cproject.args.VersionManager;
+import org.xmlcml.cproject.files.CTree;
+import org.xmlcml.cproject.files.ContentProcessor;
+import org.xmlcml.cproject.files.ResourceLocation;
+import org.xmlcml.cproject.files.ResultsElement;
+import org.xmlcml.cproject.lookup.AbstractLookup;
+import org.xmlcml.cproject.lookup.DefaultStringDictionary;
+//import org.xmlcml.cmine.args.ArgIterator;
+//import org.xmlcml.cmine.args.ArgumentOption;
+//import org.xmlcml.cmine.args.DefaultArgProcessor;
+//import org.xmlcml.cmine.args.ValueElement;
+//import org.xmlcml.cmine.args.VersionManager;
+//import org.xmlcml.cmine.files.CTree;
+//import org.xmlcml.cmine.files.ContentProcessor;
+//import org.xmlcml.cmine.files.ResourceLocation;
+//import org.xmlcml.cmine.lookup.AbstractLookup;
+//import org.xmlcml.cmine.lookup.DefaultStringDictionary;
 import org.xmlcml.norma.NormaArgProcessor;
 import org.xmlcml.xml.XMLUtil;
 
@@ -39,7 +49,8 @@ import nu.xom.Element;
  * 
  * @author pm286
  */
-public class AMIArgProcessor extends DefaultArgProcessor {
+public class AMIArgProcessor extends CProjectArgProcessor {
+//	public class AMIArgProcessor extends DefaultArgProcessor {
 	
 	public static final Logger LOG = Logger.getLogger(AMIArgProcessor.class);
 	static {
@@ -342,7 +353,7 @@ public class AMIArgProcessor extends DefaultArgProcessor {
 				String name = searcher.getName();
 				this.TREE_LOG().info("search "+name);
 				LOG.trace("search "+name);
-				ResultsElement resultsElement = searcher.search(sectionElements, createResultsElement());
+				org.xmlcml.cproject.files.ResultsElement resultsElement = searcher.search(sectionElements, createResultsElement());
 				resultsElement.lookup(lookupInstanceByName, lookupNames);
 				LOG.trace("exactList "+resultsElement.getExactList());
 				resultsElement.setAllResultElementNames(name);

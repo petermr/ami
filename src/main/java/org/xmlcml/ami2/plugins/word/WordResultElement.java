@@ -1,11 +1,11 @@
 package org.xmlcml.ami2.plugins.word;
 
-import nu.xom.Attribute;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.xmlcml.cmine.files.ResultElement;
+import org.xmlcml.cproject.files.ResultElement;
 import org.xmlcml.xml.XMLUtil;
+
+import nu.xom.Attribute;
 
 public class WordResultElement extends ResultElement {
 

@@ -9,10 +9,9 @@ import java.util.Set;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.xmlcml.cmine.args.DefaultArgProcessor;
+import org.xmlcml.cproject.args.DefaultArgProcessor;
 import org.xmlcml.diagrams.DiagramTree;
 import org.xmlcml.euclid.Int2;
-import org.xmlcml.euclid.Util;
 import org.xmlcml.image.pixel.PixelEdge;
 import org.xmlcml.image.pixel.PixelEdgeList;
 import org.xmlcml.image.pixel.PixelNode;

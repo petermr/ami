@@ -1,7 +1,6 @@
 package org.xmlcml.ami2;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
@@ -13,10 +12,9 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlcml.ami2.plugins.ResultsAnalysis;
 import org.xmlcml.ami2.plugins.ResultsAnalysis.SummaryType;
-import org.xmlcml.cmine.files.CProject;
-import org.xmlcml.cmine.files.ProjectSnippetsTree;
-import org.xmlcml.cmine.util.CMineTestFixtures;
-import org.xmlcml.cmine.util.DataTablesTool;
+import org.xmlcml.cproject.files.ProjectSnippetsTree;
+import org.xmlcml.cproject.util.CMineTestFixtures;
+import org.xmlcml.cproject.util.DataTablesTool;
 import org.xmlcml.html.HtmlHtml;
 import org.xmlcml.html.HtmlTable;
 import org.xmlcml.xml.XMLUtil;

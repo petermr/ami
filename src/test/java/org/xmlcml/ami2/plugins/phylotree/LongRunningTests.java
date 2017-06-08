@@ -8,17 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.vafer.jdeb.shaded.compress.io.FilenameUtils;
 import org.xmlcml.ami2.AMIFixtures;
 import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlNEXML;
 import org.xmlcml.ami2.plugins.phylotree.nexml.NexmlOtu;
 import org.xmlcml.ami2.plugins.regex.RegexArgProcessor;
-import org.xmlcml.ami2.plugins.regex.RegexPlugin;
 import org.xmlcml.graphics.svg.SVGSVG;
 import org.xmlcml.norma.editor.EditList;
 import org.xmlcml.norma.editor.Extraction;

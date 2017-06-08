@@ -6,16 +6,16 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import nu.xom.Attribute;
-import nu.xom.Element;
-import nu.xom.Text;
-
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.xmlcml.ami2.plugins.AMIArgProcessor;
 import org.xmlcml.ami2.plugins.MatcherResult;
-import org.xmlcml.cmine.args.DefaultArgProcessor;
-import org.xmlcml.cmine.args.VariableProcessor;
+import org.xmlcml.cproject.args.DefaultArgProcessor;
+import org.xmlcml.cproject.args.VariableProcessor;
+
+import nu.xom.Attribute;
+import nu.xom.Element;
+import nu.xom.Text;
 
 /** a component of a regular expression
  * 

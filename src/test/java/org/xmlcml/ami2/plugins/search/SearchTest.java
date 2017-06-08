@@ -8,7 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlcml.ami2.AMIFixtures;
 import org.xmlcml.ami2.plugins.AMIArgProcessor;
-import org.xmlcml.cmine.util.CMineTestFixtures;
+import org.xmlcml.cproject.util.CMineTestFixtures;
 
 public class SearchTest {
 

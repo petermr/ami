@@ -2,25 +2,22 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.xml-cml</groupId>
-	<artifactId>ami2</artifactId>
-	<version>0.1-SNAPSHOT</version>
+
+    <properties>
+	    <ami.version>0.4.0</ami.version>
+	    <!-- upstream -->
+	    <norma.version>0.4.0</norma.version>
+	    <diagramanalyzer.version>0.4.0</diagramanalyzer.version>
+    </properties>
+
+	<groupId>org.contentmine</groupId>
+	<artifactId>ami</artifactId>
+	<version>${ami.version}</version>
+	<packaging>jar</packaging>
+	<name>AMI</name>
 	<description>Plugin architecture for converting Normalized science to Semantic science</description>
-    <name>AMI</name>
-<!--
-	<parent>
-		<groupId>uk.ac.cam.ch.wwmm</groupId>
-
-		<artifactId>wwmm-parent</artifactId>
-		<version>5-SNAPSHOT</version>
-	</parent>
--->
-<!-- this should not be necessary -->
-<properties>
-	<guava.version>18.0</guava.version>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-</properties>
-
+	<url>http://github.com/contentmine/ami/</url>
+    
 	<!--Remove <repositories> for releases to Maven central -->
 	<repositories>
 		<repository>
@@ -280,18 +277,11 @@
 	</build>
 
 	<dependencies>
-		<!-- removed until the functionality is added
-		<dependency>
-			<groupId>org.xml-cml</groupId>
-			<artifactId>javaocrnew</artifactId>
-			<version>0.1-SNAPSHOT</version>
-		</dependency>
--->
 
 		<dependency>
-			<groupId>org.xml-cml</groupId>
+			<groupId>org.contentmine</groupId>
 			<artifactId>norma</artifactId>
-			<version>0.1-SNAPSHOT</version>
+			<version>0.4.0</version>
 		</dependency>
 		<!-- removed until the functionality is added
 		<dependency>
@@ -301,9 +291,14 @@
 		</dependency>
 -->
 		<dependency>
-			<groupId>org.xml-cml</groupId>
+			<groupId>org.contentmine</groupId>
 			<artifactId>diagramanalyzer</artifactId>
-			<version>0.1-SNAPSHOT</version>
+			<version>${diagramanalyzer.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.contentmine</groupId>
+			<artifactId>norma</artifactId>
+			<version>${norma.version}</version>
 		</dependency>
 <!-- removed until functionality os added
 		<dependency>
@@ -331,12 +326,13 @@
 		There seems to be a rogue version of guava somewhere
 		(http://stackoverflow.com/questions/28978277/guava-multisets-copyhighestcountfirst-method-suddenly-not-working)
 		 -->
+		 <!-- 
 		<dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>
  			<version>${guava.version}</version>
 		</dependency>
-
+-->
 
 		<!-- tests -->
 		<dependency>

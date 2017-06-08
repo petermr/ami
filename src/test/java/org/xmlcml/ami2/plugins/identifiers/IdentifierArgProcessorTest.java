@@ -2,19 +2,14 @@ package org.xmlcml.ami2.plugins.identifiers;
 
 import java.io.File;
 
-import nu.xom.Builder;
-import nu.xom.Element;
-
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
-import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.xmlcml.ami2.AMIFixtures;
 import org.xmlcml.ami2.plugins.identifier.IdentifierArgProcessor;
 import org.xmlcml.ami2.plugins.identifier.IdentifierPlugin;
-import org.xmlcml.cmine.args.DefaultArgProcessor;
 
 // TESTED 2016-01-12
 public class IdentifierArgProcessorTest {

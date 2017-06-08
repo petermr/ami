@@ -10,9 +10,9 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.xmlcml.ami2.plugins.ResultsAnalysis.SummaryType;
-import org.xmlcml.cmine.files.CProject;
-import org.xmlcml.cmine.util.CellRenderer;
-import org.xmlcml.cmine.util.DataTablesTool;
+import org.xmlcml.cproject.files.CProject;
+import org.xmlcml.cproject.util.CellRenderer;
+import org.xmlcml.cproject.util.DataTablesTool;
 import org.xmlcml.html.HtmlHtml;
 import org.xmlcml.html.HtmlTable;
 import org.xmlcml.html.HtmlTd;
@@ -27,6 +27,7 @@ import org.xmlcml.xml.XMLUtil;
  */
 public class CommandProcessor {
 
+	private static final double SCHOLARLYHTML_FRACTION = 0.2;
 	private static final Logger LOG = Logger.getLogger(CommandProcessor.class);
 	static {
 		LOG.setLevel(Level.DEBUG);
@@ -93,7 +94,7 @@ public class CommandProcessor {
 	}
 
 	public void runNormaIfNecessary() {
-		if (!new CProject(projectDir).hasScholarlyHTML()) {
+		if (!new CProject(projectDir).hasScholarlyHTML(SCHOLARLYHTML_FRACTION)) {
 			String args = "-i fulltext.xml -o scholarly.html --transform nlm2html --project "+projectDir;
 			LOG.debug("running NORMA "+args);
 			new Norma().run(args);

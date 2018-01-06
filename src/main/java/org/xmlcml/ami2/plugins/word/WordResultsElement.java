@@ -15,12 +15,11 @@ import org.xmlcml.euclid.IntArray;
 import org.xmlcml.euclid.IntRange;
 import org.xmlcml.euclid.RealArray;
 import org.xmlcml.euclid.RealRange;
-import org.xmlcml.html.HtmlBody;
-import org.xmlcml.html.HtmlElement;
-import org.xmlcml.html.HtmlHtml;
-import org.xmlcml.html.HtmlP;
-import org.xmlcml.html.HtmlSpan;
-import org.xmlcml.html.HtmlStyle;
+import org.xmlcml.graphics.html.HtmlElement;
+import org.xmlcml.graphics.html.HtmlHtml;
+import org.xmlcml.graphics.html.HtmlP;
+import org.xmlcml.graphics.html.HtmlSpan;
+import org.xmlcml.graphics.html.HtmlStyle;
 import org.xmlcml.xml.XMLUtil;
 
 /** contains results for bag of words
@@ -120,7 +119,7 @@ public class WordResultsElement extends ResultsElement {
 			style.addCss(cssStyle);
 		}
 		HtmlP p = new HtmlP();
-		html.ensureBody().appendChild(p);
+		html.getOrCreateBody().appendChild(p);
 		addWordsWithFontSizesInSpans(fontSizeIntArray, p);
 		return html;
 	}

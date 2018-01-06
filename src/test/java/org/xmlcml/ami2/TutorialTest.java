@@ -2,8 +2,6 @@ package org.xmlcml.ami2;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -23,8 +21,8 @@ import org.xmlcml.cproject.args.DefaultArgProcessor;
 import org.xmlcml.cproject.files.CProject;
 import org.xmlcml.cproject.util.CMineTestFixtures;
 import org.xmlcml.cproject.util.DataTablesTool;
-import org.xmlcml.html.HtmlHtml;
-import org.xmlcml.html.HtmlTable;
+import org.xmlcml.graphics.html.HtmlHtml;
+import org.xmlcml.graphics.html.HtmlTable;
 import org.xmlcml.norma.Norma;
 import org.xmlcml.xml.XMLUtil;
 

@@ -221,7 +221,7 @@ public class HEPTest {
 		List<SVGPath> pathMLLLZList = new ArrayList<SVGPath>();
 		List<SVGPath> pathOtherList = new ArrayList<SVGPath>();
 		for (SVGPath path : pathList) {
-			String sig = path.getSignature();
+			String sig = path.createSignatureFromDStringPrimitives();
 			if ("MCCCC".equals(sig)) {
 				pathMCCCCList.add(path);
 			} else if ("ML".equals(sig)) {

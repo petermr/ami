@@ -1,7 +1,6 @@
 package org.xmlcml.ami2.plugins.regex;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
@@ -18,9 +17,9 @@ import org.xmlcml.cproject.files.CTree;
 import org.xmlcml.cproject.files.ResultElement;
 import org.xmlcml.cproject.files.ResultsElement;
 import org.xmlcml.cproject.util.CMineTestFixtures;
-import org.xmlcml.html.HtmlA;
-import org.xmlcml.html.HtmlElement;
-import org.xmlcml.html.HtmlP;
+import org.xmlcml.graphics.html.HtmlA;
+import org.xmlcml.graphics.html.HtmlElement;
+import org.xmlcml.graphics.html.HtmlP;
 import org.xmlcml.xml.XMLUtil;
 
 import nu.xom.Element;

@@ -3,9 +3,6 @@ package org.xmlcml.ami2.plugins.phylotree;
 import java.util.ArrayList;
 import java.util.List;
 
-import nu.xom.Attribute;
-import nu.xom.Nodes;
-
 import org.apache.log4j.Logger;
 import org.xmlcml.euclid.Real2;
 import org.xmlcml.euclid.Real2Range;
@@ -15,7 +12,9 @@ import org.xmlcml.graphics.svg.SVGG;
 import org.xmlcml.graphics.svg.SVGText;
 import org.xmlcml.graphics.svg.linestuff.ComplexLine;
 import org.xmlcml.graphics.svg.linestuff.Joint;
-import org.xmlcml.svg2xml.text.Word;
+
+import nu.xom.Attribute;
+import nu.xom.Nodes;
 
 /** manages nodes in the SVGXtree
  * 

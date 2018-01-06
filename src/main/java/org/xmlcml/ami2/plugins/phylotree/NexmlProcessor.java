@@ -13,8 +13,6 @@ import java.util.regex.Pattern;
 
 import javax.imageio.ImageIO;
 
-import nu.xom.Attribute;
-
 import org.apache.commons.io.FileUtils;
 import org.xmlcml.ami2.lookups.TaxdumpLookup;
 import org.xmlcml.ami2.plugins.phylotree.PhyloTreeArgProcessor.Message;
@@ -31,9 +29,9 @@ import org.xmlcml.diagrams.phylo.PhyloTreePixelAnalyzer;
 import org.xmlcml.euclid.Real2;
 import org.xmlcml.euclid.Real2Range;
 import org.xmlcml.euclid.Real2Range.BoxDirection;
+import org.xmlcml.graphics.html.HtmlSpan;
 import org.xmlcml.graphics.svg.SVGSVG;
 import org.xmlcml.graphics.svg.text.SVGPhrase;
-import org.xmlcml.html.HtmlSpan;
 import org.xmlcml.image.pixel.PixelGraph;
 import org.xmlcml.image.pixel.PixelNode;
 import org.xmlcml.norma.editor.EditList;
@@ -41,6 +39,8 @@ import org.xmlcml.norma.editor.Extraction;
 import org.xmlcml.norma.editor.SubstitutionEditor;
 import org.xmlcml.norma.image.ocr.HOCRReader;
 import org.xmlcml.xml.XMLUtil;
+
+import nu.xom.Attribute;
 
 public class NexmlProcessor {
 

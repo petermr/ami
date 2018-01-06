@@ -107,7 +107,7 @@ public class NexmlFactory {
 		nexmlTrees.appendChild(nexmlTree);
 		String treeId = TREE_ID+nexmlTrees.getOrCreateTreeList().size();
 		nexmlTree.setId(treeId);
-		PixelNodeList pixelNodeList = diagramTree.getGraph().getNodeList();
+		PixelNodeList pixelNodeList = diagramTree.getGraph().getOrCreateNodeList();
 		if (rootPixelNode == null) {
 			rootPixelNode = diagramTree.getGraph().getRootPixelNode();
 			if (rootPixelNode == null) {
@@ -115,7 +115,7 @@ public class NexmlFactory {
 			}
 		}
 		addNodes(pixelNodeList, rootPixelNode);
-		PixelEdgeList pixelEdgeList = diagramTree.getGraph().getEdgeList();
+		PixelEdgeList pixelEdgeList = diagramTree.getGraph().getOrCreateEdgeList();
 		addEdges(nexmlTree, pixelEdgeList);
 		checkEdges();
 		addEdgesToNodes();

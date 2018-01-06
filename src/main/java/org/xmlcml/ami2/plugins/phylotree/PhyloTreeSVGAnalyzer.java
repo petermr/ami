@@ -1,6 +1,7 @@
 package org.xmlcml.ami2.plugins.phylotree;
 
 import java.util.ArrayList;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -18,8 +19,9 @@ import org.xmlcml.graphics.svg.linestuff.BoundingBoxManager;
 import org.xmlcml.graphics.svg.linestuff.ComplexLine;
 import org.xmlcml.graphics.svg.linestuff.ComplexLine.LineOrientation;
 import org.xmlcml.graphics.svg.linestuff.ComplexLine.SideOrientation;
-import org.xmlcml.svg2xml.builder.GeometryBuilder;
-import org.xmlcml.svg2xml.text.Word;
+
+//import org.xmlcml.svg2xml.builder.GeometryBuilder;
+//import org.xmlcml.svg2xml.text.Word;
 
 /** 
  * Internal engine that does the hard work of creating the tree.
@@ -28,7 +30,12 @@ import org.xmlcml.svg2xml.text.Word;
  * 
  * @author pm286
  */
+// FIXME commented out
+// does not build with new svghtml and norma
+// probably worth refactoring if we get use for it.
+
 public class PhyloTreeSVGAnalyzer {
+	
 	private static final Logger LOG = Logger.getLogger(PhyloTreeSVGAnalyzer.class);
 
 	public static final double DEFAULT_PIXEL_EPS = 0.01;

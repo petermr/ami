@@ -11,7 +11,13 @@ import org.xmlcml.ami2.plugins.AMIArgProcessor;
 import org.xmlcml.ami2.plugins.word.WordArgProcessor;
 import org.xmlcml.ami2.wordutil.WordSetWrapper;
 
-public class EngTest {
+/**
+ * queries the IEEE API.
+ * 
+ * @author pm286
+ *
+ */
+public class IEEETest {
 
 	@Test
 	// TESTED

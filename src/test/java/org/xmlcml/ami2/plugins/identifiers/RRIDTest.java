@@ -43,10 +43,11 @@ public class RRIDTest {
 	@Test
 	// SHOWCASE
 	// TESTED 2016-01-12
-	@Ignore // uses lookup
+//	@Ignore // uses lookup
 	public void testAmiIdentifier() throws IOException {
 
 	    File neuro4415html = new File(AMIFixtures.TEST_RRID_DIR, "JNEUROSCI.4415-13.2014.html");
+	    LOG.debug("input: "+neuro4415html);
 	    File q4415 = new File(AMIFixtures.TEST_RRID_DIR, "q4415/");
 	    q4415.mkdirs();
 	    FileUtils.copyFile(neuro4415html, new File(q4415, "fulltext.html"));
@@ -66,6 +67,7 @@ public class RRIDTest {
 				+ "xpath=\"/html[1]/body[1]/div[1]/div[3]/div[3]/");
 	    Assert.assertTrue("exists", rridDir.exists());
 	    File resultsXml = new File(rridDir, "q4415/results/identifier/rrid.ab/results.xml");
+	    LOG.debug("output: "+resultsXml);
 	    Assert.assertTrue("results", resultsXml.exists());
 	}
 }
